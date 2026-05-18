@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Paramis | AI Strategy Consulting - Editorial Theme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+          :root {
+                  --black: #0d0d0d;
+                  --charcoal: #1a1a1a;
+                  --gray-dark: #333333;
+                  --gray: #666666;
+                  --gray-light: #999999;
+                  --cream: #f5f3ef;
+                  --white: #ffffff;
+                  --accent: #c9a86c;
+                  --accent-dark: #a68b4d;
+          }
+
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+          html { scroll-behavior: smooth; }
+
+          body {
+                  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+                  background: var(--cream);
+                  color: var(--black);
+                  line-height: 1.6;
+          }
+
+          h1, h2, h3 {
+                  font-family: 'Playfair Display', Georgia, serif;
+                  font-weight: 500;
+          }
+
+          nav {
+                  position: fixed;
+                  top: 0;
+                  width: 100%;
+                  padding: 2rem 6%;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  z-index: 1000;
+                  mix-blend-mode: difference;
+          }
+
+          .logo {
+                  display: flex;
+                  align-items: center;
+                  gap: 0.75rem;
+                  text-decoration: none;
+                  color: var(--white);
+                  font-family: 'DM Sans', sans-serif;
+                  font-weight: 600;
+                  font-size: 1.1rem;
+                  text-transform: uppercase;
+                  letter-spacing: 3px;
+          }
+          .logo img {
+                  height: 28px;
+                  filter: brightness(0) invert(1);
+          }
+
+          .nav-links {
+                  display: flex;
+                  gap: 3rem;
+                  list-style: none;
+          }
+          .nav-links a {
+                  color: var(--white);
+                  text-decoration: none;
+                  font-size: 0.8rem;
+                  font-weight: 500;
+                  text-transform: uppercase;
+                  letter-spacing: 2px;
+                  transition: opacity 0.3s;
+          }
+          .nav-links a:hover { opacity: 0.6; }
+
+          .hero {
+                  min-height: 100vh;
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  background: var(--black);
+                  color: var(--white);
+          }
+
+          .hero-text {
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  padding: 8rem 6rem 8rem 8%;
+          }
+
+          .hero-label {
+                  font-size: 0.75rem;
+                  font-weight: 500;
+                  text-transform: uppercase;
+                  letter-spacing: 4px;
+                  color: var(--accent);
+                  margin-bottom: 3rem;
+          }
+
+          .hero h1 {
+                  font-size: 5rem;
+                  font-weight: 400;
+                  line-height: 1.1;
+                  margin-bottom: 2rem;
+                  letter-spacing: -1px;
+          }
+
+          .hero h1 em {
+                  font-style: italic;
+                  color: var(--accent);
+          }
+
+          .hero p {
+                  font-size: 1.1rem;
+                  color: var(--gray-light);
+                  margin-bottom: 3rem;
+                  max-width: 450px;
+                  line-height: 1.8;
+          }
+
+          .hero-cta {
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 1rem;
+                  color: var(--white);
+                  text-decoration: none;
+                  font-size: 0.85rem;
+                  font-weight: 500;
+                  text-transform: uppercase;
+                  letter-spacing: 2px;
+                  border-bottom: 1px solid var(--accent);
+                  padding-bottom: 0.5rem;
+                  transition: all 0.3s;
+                  width: fit-content;
+          }
+          .hero-cta:hover { gap: 1.5rem; }
+          .hero-cta svg {
+                  width: 20px;
+                  stroke: var(--accent);
+                  stroke-width: 2;
+                  fill: none;
+          }
+
+          .hero-image {
+                  position: relative;
+                  overflow: hidden;
+          }
+          .hero-image img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  filter: grayscale(100%) contrast(1.1);
+          }
+
+          section { padding: 10rem 8%; }
+
+          .section-grid {
+                  display: grid;
+                  grid-template-columns: 1fr 2fr;
+                  gap: 6rem;
+                  align-items: start;
+          }
+
+          .section-sidebar {
+                  position: sticky;
+                  top: 8rem;
+          }
+
+          .section-number {
+                  font-family: 'Playfair Display', serif;
+                  font-size: 6rem;
+                  font-weight: 400;
+                  color: var(--accent);
+                  line-height: 1;
+                  margin-bottom: 1rem;
+          }
+
+          .section-label {
+                  font-size: 0.75rem;
+                  font-weight: 600;
+                  text-transform: uppercase;
+                  letter-spacing: 3px;
+                  color: var(--gray);
+                  margin-bottom: 1rem;
+          }
+
+          h2 {
+                  font-size: 3rem;
+                  font-weight: 400;
+                  line-height: 1.2;
+                  letter-spacing: -0.5px;
+          }
+
+          .services-list {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 4rem;
+          }
+
+          .service-item {
+                  display: grid;
+                  grid-template-columns: 80px 1fr;
+                  gap: 2rem;
+                  padding-bottom: 4rem;
+                  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+          .service-item:last-child { border-bottom: none; }
+
+          .service-number {
+                  font-family: 'Playfair Display', serif;
+                  font-size: 1.25rem;
+                  color: var(--accent);
+          }
+
+          .service-content h3 {
+                  font-size: 1.75rem;
+                  font-weight: 500;
+                  margin-bottom: 1rem;
+          }
+
+          .service-content p {
+                  font-size: 1rem;
+                  color: var(--gray);
+                  line-height: 1.9;
+          }
+
+          #about {
+                  background: var(--charcoal);
+                  color: var(--white);
+          }
+
+          #about .section-sidebar { color: var(--white); }
+          #about h2 { color: var(--white); }
+
+          .about-content {
+                  display: grid;
+                  grid-template-columns: 1.2fr 1fr;
+                  gap: 4rem;
+                  align-items: start;
+          }
+
+          .about-text p {
+                  font-size: 1.1rem;
+                  color: var(--gray-light);
+                  margin-bottom: 1.5rem;
+                  line-height: 1.9;
+          }
+
+          .about-image-wrapper { position: relative; }
+
+          .about-image-wrapper img {
+                  width: 100%;
+                  filter: grayscale(100%);
+                  transition: filter 0.5s;
+          }
+
+          .about-image-wrapper:hover img { filter: grayscale(0%); }
+
+          .about-name {
+                  margin-top: 2rem;
+                  padding-top: 2rem;
+                  border-top: 1px solid rgba(255, 255, 255, 0.2);
+          }
+
+          .about-name h3 {
+                  font-size: 1.5rem;
+                  margin-bottom: 0.25rem;
+          }
+
+          .about-name span {
+                  font-size: 0.85rem;
+                  color: var(--gray-light);
+                  text-transform: uppercase;
+                  letter-spacing: 2px;
+          }
+
+          #contact {
+                  text-align: center;
+                  padding: 12rem 8%;
+          }
+
+          #contact h2 {
+                  font-size: 4rem;
+                  margin-bottom: 2rem;
+          }
+
+          #contact h2 em {
+                  font-style: italic;
+                  color: var(--accent);
+          }
+
+          #contact p {
+                  font-size: 1.1rem;
+                  color: var(--gray);
+                  max-width: 500px;
+                  margin: 0 auto 3rem;
+          }
+
+          .contact-links {
+                  display: flex;
+                  gap: 3rem;
+                  justify-content: center;
+          }
+
+          .contact-link {
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 0.75rem;
+                  color: var(--black);
+                  text-decoration: none;
+                  font-size: 0.85rem;
+                  font-weight: 500;
+                  text-transform: uppercase;
+                  letter-spacing: 2px;
+                  padding-bottom: 0.5rem;
+                  border-bottom: 1px solid var(--black);
+                  transition: all 0.3s;
+          }
+          .contact-link:hover {
+                  border-color: var(--accent);
+                  color: var(--accent-dark);
+          }
+
+          footer {
+                  padding: 4rem 8%;
+                  background: var(--black);
+                  color: var(--gray-light);
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  font-size: 0.8rem;
+                  text-transform: uppercase;
+                  letter-spacing: 1px;
+          }
+
+          footer a {
+                  color: var(--gray-light);
+                  text-decoration: none;
+                  transition: color 0.3s;
+          }
+          footer a:hover { color: var(--accent); }
+
+          @media (max-width: 1024px) {
+                  .hero { grid-template-columns: 1fr; }
+                  .hero-image { display: none; }
+                  .hero-text { padding: 10rem 6%; }
+                  .section-grid { grid-template-columns: 1fr; gap: 3rem; }
+                  .section-sidebar { position: static; }
+                  .about-content { grid-template-columns: 1fr; }
+          }
+
+          @media (max-width: 768px) {
+                  .hero h1 { font-size: 3rem; }
+                  h2 { font-size: 2.25rem; }
+                  #contact h2 { font-size: 2.5rem; }
+                  .nav-links { display: none; }
+                  .service-item { grid-template-columns: 1fr; gap: 1rem; }
+                  .contact-links { flex-direction: column; align-items: center; }
+          }
+        </style>
+  </head>
+  <body>
+      <nav>
+            <a href="#" class="logo">
+                    <img src="peregrine-logo.png" alt="Paramis">
+                    <span>Paramis</span>
+            </a>a>
+          <ul class="nav-links">
+                <li><a href="#services">Services</a>a></li>
+                <li><a href="#about">About</a>a></li>
+                <li><a href="#contact">Contact</a>a></li>
+          </ul>ul>
+      </nav>
+  
+    <section class="hero">
+        <div class="hero-text">
+              <span class="hero-label">AI Strategy Consulting</span>
+              <h1>Strategy for the <em>AI-powered</em> enterprise</h1>
+              <p>We help organizations design and deploy generative AI strategies that drive measurable transformation.</p>
+              <a href="#contact" class="hero-cta">
+                      Start a conversation
+                      <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>svg>
+              </a>a>
+        </div>div>
+        <div class="hero-image">
+              <img src="peregrine-logo.png" alt="Paramis" style="object-fit: contain; padding: 20%; background: #1a1a1a;">
+        </div>div>
+    </section>section>
+  
+    <section id="services">
+        <div class="section-grid">
+              <div class="section-sidebar">
+                      <span class="section-number">01</span>
+                      <span class="section-label">Services</span>
+                      <h2>What we do</h2>
+              </div>div>
+              <div class="services-list">
+                      <div class="service-item">
+                                <span class="service-number">01</span>
+                                <div class="service-content">
+                                            <h3>AI Journey Advisory</h3>
+                                            <p>We translate model releases, latency curves, and cost trends into actionable roadmaps your board and teams can follow with confidence. Our strategic frameworks help you navigate the rapidly evolving AI landscape with clarity and purpose.</p>
+                                </div>div>
+                      </div>div>
+                      <div class="service-item">
+                                <span class="service-number">02</span>
+                                <div class="service-content">
+                                            <h3>Deployment & Embedding</h3>
+                                            <p>Strategy becomes results on the work floor. We embed AI into workflows, train teams on tools and agents, and track adoption metrics that matter.</p>
+                                </div>div>
+                      </div>div>
+                      <div class="service-item">
+                                <span class="service-number">03</span>
+                                <div class="service-content">
+                                            <h3>Change Management</h3>
+                                            <p>AI deployment is not just technical change. We focus on the human side—ensuring adoption is both ethical and embraced across your organization.</p>
+                                </div>div>
+                      </div>div>
+              </div>div>
+        </div>div>
+    </section>section>
+  
+    <section id="about">
+        <div class="section-grid">
+              <div class="section-sidebar">
+                      <span class="section-number">02</span>
+                      <span class="section-label">About</span>
+                      <h2>The founder</h2>
+              </div>div>
+              <div class="about-content">
+                      <div class="about-text">
+                                <p>I help organizations adopt generative AI in a way that is practical, governed, and tied to measurable outcomes. My work focuses on translating fast-moving model capabilities into clear operating guidance: what to do now, what to avoid, how to build internal fluency, and how to scale from early use cases into repeatable workflows.</p>
+                                <p>Through Paramis, I advise leaders on AI strategy, embed with teams to stand up real workflows, and teach hands-on programs for executives, managers, and power users.</p>
+                                <p>Across two decades in senior leadership, I've led complex operational and technology transformations in healthcare, banking, and enterprise services. I pair this foundation with deep expertise in Six Sigma, Lean, Agile, and organizational change management.</p>
+                      </div>div>
+                      <div class="about-image-wrapper">
+                                <img src="headshot.jpg" alt="Woody Taylor">
+                                <div class="about-name">
+                                            <h3>Woody Taylor</h3>
+                                            <span>Founder & Principal</span>
+                                </div>div>
+                      </div>div>
+              </div>div>
+        </div>div>
+    </section>section>
+  
+    <section id="contact">
+        <h2>Let's <em>talk</em></h2>
+        <p>Ready to start your AI journey? Reach out and let's discuss how we can help transform your organization.</p>
+        <div class="contact-links">
+              <a href="mailto:contact@paramis.ai?subject=Website%20Inquiry" class="contact-link">Send a Message</a>a>
+              <a href="https://www.linkedin.com/in/woodytaylor/" target="_blank" class="contact-link">LinkedIn</a>a>
+        </div>div>
+    </section>section>
+  
+    <footer>
+          <span>&copy; 2025 Paramis LLC</span>
+          <a href="https://www.linkedin.com/in/woodytaylor/" target="_blank">LinkedIn</a>a>
+    </footer>
+  </body>
+</html>html>
+    </footer></p></p></em></h1></li></li></span>
+      </nav>
+  </body>
+    </style></title>
+  </head>

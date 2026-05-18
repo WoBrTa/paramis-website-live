@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foundations Training: Where Employee Journeys Start | Paramis Field Notes</title>
+  <meta name="description" content="How Paramis builds AI capability that lasts. A nine-week training system that treats ChatGPT and Claude as a work system of intelligences, modalities, and tools.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===========================================
+       PARAMIS FIELD NOTES — ENTRY PAGE
+       Design system inherited from index.html
+    =========================================== */
+    :root {
+      --primary: #4A90A4;
+      --primary-light: #7CB9E8;
+      --primary-dark: #2C5F72;
+      --accent: #F5A623;
+      --dark: #0a0a0a;
+      --dark-elevated: #111111;
+      --light: #ffffff;
+      --gray: #a0a0a0;
+      --gray-dim: #666;
+      --glass: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glow-primary: rgba(74, 144, 164, 0.4);
+      --glow-accent: rgba(245, 166, 35, 0.3);
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.5rem;
+      --text-2xl: 2rem;
+      --text-3xl: 2.5rem;
+      --text-4xl: 3.5rem;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* Noise texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.015;
+      z-index: 10000;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* Ambient gradient */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(74, 144, 164, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(245, 166, 35, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* ===========================================
+       SCROLL PROGRESS BAR
+    =========================================== */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      z-index: 10002;
+      transform-origin: left;
+      transform: scaleX(0);
+      will-change: transform;
+    }
+
+    /* ===========================================
+       CURSOR GLOW
+    =========================================== */
+    .cursor-glow {
+      position: fixed;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(74, 144, 164, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+    }
+
+    /* ===========================================
+       NAVIGATION
+    =========================================== */
+    nav {
+      position: fixed;
+      top: 0; width: 100%;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      background: rgba(10, 10, 10, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      padding: 0.75rem 5%;
+      background: rgba(10, 10, 10, 0.9);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--light);
+      font-weight: 600;
+      font-size: 1.35rem;
+      letter-spacing: -0.5px;
+    }
+    .logo img {
+      height: 36px;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover img {
+      transform: rotate(-5deg) scale(1.05);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-links a:hover { color: var(--light); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--light); }
+    .nav-links a.active::after { width: 100%; }
+
+    /* Mobile hamburger */
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 10001;
+    }
+    .mobile-menu-btn span {
+      width: 24px; height: 2px;
+      background: var(--light);
+      transition: all 0.3s ease;
+    }
+    .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+    .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ===========================================
+       CONTENT LAYOUT
+    =========================================== */
+    .entry-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 8rem 5% 4rem;
+    }
+
+    .content-column {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      margin-bottom: 2rem;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--primary-light); }
+    .back-link svg { width: 16px; height: 16px; }
+
+    /* Meta row */
+    .entry-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .entry-tag {
+      color: var(--accent);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .entry-date {
+      color: var(--gray-dim);
+      font-size: var(--text-sm);
+    }
+
+    /* Title */
+    .entry-title {
+      font-size: var(--text-4xl);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--light), var(--primary-light), var(--accent));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 6s ease-in-out infinite;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Subtitle */
+    .entry-subtitle {
+      color: var(--gray);
+      font-size: var(--text-lg);
+      line-height: 1.7;
+      max-width: 700px;
+      margin-bottom: 3rem;
+    }
+
+    /* ===========================================
+       HERO VISUAL
+    =========================================== */
+    .hero-visual {
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(17, 17, 17, 0.95));
+      padding: 3rem 2rem;
+    }
+    .hero-visual-label {
+      text-align: center;
+      color: var(--accent);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 1rem;
+    }
+    .hero-visual-label::before {
+      content: '-- ';
+      opacity: 0.5;
+    }
+    .hero-visual-title {
+      text-align: center;
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--light), var(--primary-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-visual-sub {
+      text-align: center;
+      color: var(--gray-dim);
+      font-size: var(--text-sm);
+      margin-bottom: 2.5rem;
+    }
+    .hero-format-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-format-item {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hero-format-item:hover {
+      border-color: rgba(74, 144, 164, 0.3);
+      box-shadow: 0 2px 20px rgba(74, 144, 164, 0.08);
+    }
+    .hero-format-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+    .hero-format-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: var(--primary);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    .hero-format-name {
+      color: var(--light);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    /* ===========================================
+       EXECUTIVE SUMMARY
+    =========================================== */
+    .exec-summary {
+      color: var(--light);
+      font-size: var(--text-base);
+      line-height: 1.9;
+      margin-bottom: 3rem;
+    }
+
+    /* ===========================================
+       STAT CALLOUTS
+    =========================================== */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+    .stat-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: var(--text-4xl);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--light), var(--primary-light), var(--accent));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 6s ease-in-out infinite;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      color: var(--gray-dim);
+      font-size: var(--text-sm);
+      line-height: 1.4;
+    }
+
+    /* ===========================================
+       DIVIDER
+    =========================================== */
+    .section-divider {
+      max-width: 720px;
+      margin: 0 auto 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+    }
+    .section-divider span {
+      color: var(--gray-dim);
+      font-size: var(--text-sm);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    /* ===========================================
+       NARRATIVE BODY
+    =========================================== */
+    .narrative {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .narrative .section-label {
+      color: var(--accent);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 1.5rem;
+    }
+    .narrative .section-label::before {
+      content: '-- ';
+      opacity: 0.5;
+    }
+
+    .narrative h3 {
+      display: none;
+    }
+
+    .narrative p {
+      color: var(--gray);
+      font-size: var(--text-base);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .narrative-section {
+      margin-bottom: 3.5rem;
+    }
+
+    /* ===========================================
+       PULL QUOTES
+    =========================================== */
+    .pull-quote {
+      border-left: 2px solid;
+      border-image: linear-gradient(to bottom, var(--primary), var(--accent)) 1;
+      padding: 1.5rem 0 1.5rem 2rem;
+      margin: 2.5rem 0;
+    }
+    .pull-quote p {
+      color: var(--light) !important;
+      font-size: var(--text-xl) !important;
+      line-height: 1.6 !important;
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: 0 !important;
+    }
+
+    /* ===========================================
+       CONTENT FORMAT CARDS
+    =========================================== */
+    .formats-section {
+      max-width: 1000px;
+      margin: 0 auto 4rem;
+    }
+    .formats-section .section-label {
+      color: var(--accent);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .formats-section .section-label::before {
+      content: '-- ';
+      opacity: 0.5;
+    }
+    .formats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .format-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    .format-card .format-icon {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .format-card .format-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--primary);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    .format-card .format-name {
+      color: var(--light);
+      font-size: var(--text-base);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .format-card .format-desc {
+      color: var(--gray-dim);
+      font-size: var(--text-sm);
+      line-height: 1.5;
+    }
+
+    /* ===========================================
+       CTA SECTION
+    =========================================== */
+    .cta-section {
+      max-width: 720px;
+      margin: 0 auto 4rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .cta-section h3 {
+      color: var(--light);
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+    .cta-section p {
+      color: var(--gray);
+      font-size: var(--text-base);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 2.5rem;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: -1;
+    }
+    .cta-btn:hover {
+      color: var(--light);
+      border-color: var(--primary);
+    }
+    .cta-btn:hover::before { opacity: 1; }
+
+    /* ===========================================
+       FOOTER
+    =========================================== */
+    .footer {
+      text-align: center;
+      padding: 3rem 5%;
+      border-top: 1px solid var(--glass-border);
+    }
+    .footer p {
+      color: var(--gray-dim);
+      font-size: var(--text-sm);
+    }
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .footer a:hover { color: var(--primary-light); }
+
+    /* ===========================================
+       SCROLL REVEAL
+    =========================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ===========================================
+       RESPONSIVE
+    =========================================== */
+    @media (max-width: 768px) {
+      .mobile-menu-btn { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(10, 10, 10, 0.98);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+        z-index: 10000;
+      }
+      .nav-links.active { opacity: 1; visibility: visible; }
+      .nav-links a { font-size: 1.2rem; }
+      nav:has(.nav-links.active) {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: transparent;
+        border-bottom: none;
+      }
+
+      .entry-title { font-size: var(--text-3xl); }
+      .stat-value { font-size: var(--text-2xl); }
+      .stats-row { grid-template-columns: 1fr; gap: 1rem; }
+      .formats-grid { grid-template-columns: 1fr 1fr; }
+      .hero-format-grid { grid-template-columns: 1fr 1fr; }
+      .pull-quote { padding-left: 1.25rem; }
+      .pull-quote p { font-size: var(--text-lg) !important; }
+    }
+
+    @media (max-width: 480px) {
+      .entry-meta { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .formats-grid { grid-template-columns: 1fr; }
+      .hero-format-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===========================================
+       CONTACT POPUP
+    =========================================== */
+    .contact-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 10003;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact-overlay.open {
+      display: flex;
+    }
+    .contact-popup {
+      background: var(--dark-elevated);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 2.5rem;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+    .contact-popup h3 {
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--light), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .contact-popup .popup-subtitle {
+      color: var(--gray);
+      font-size: var(--text-sm);
+      margin-bottom: 1.5rem;
+    }
+    .contact-popup .email-display {
+      font-size: var(--text-lg);
+      font-weight: 500;
+      color: var(--primary-light);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+    .popup-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .popup-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      border: 1px solid var(--glass-border);
+      border-radius: 4px;
+      color: var(--light);
+      font-family: inherit;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      background: transparent;
+      letter-spacing: 0.5px;
+    }
+    .popup-btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+    .popup-btn-primary:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 0 20px var(--glow-primary);
+    }
+    .popup-btn:not(.popup-btn-primary):hover {
+      border-color: var(--primary);
+      background: rgba(74, 144, 164, 0.1);
+    }
+    .popup-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    .popup-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--gray);
+      cursor: pointer;
+      padding: 0.25rem;
+      transition: color 0.3s;
+    }
+    .popup-close:hover { color: var(--light); }
+    .popup-close svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    .copied-toast {
+      color: var(--accent);
+      font-size: var(--text-sm);
+      margin-top: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .copied-toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress"></div>
+
+  <!-- Cursor glow -->
+  <div class="cursor-glow"></div>
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav>
+    <a href="../index.html" class="logo">
+      <img src="../peregrine-logo.png" alt="Paramis">
+      <span>Paramis</span>
+    </a>
+    <div class="mobile-menu-btn">
+      <span></span><span></span><span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../field-notes.html" class="active">Field Notes</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+      <li><a href="../portal.html">Client Portal</a></li>
+    </ul>
+  </nav>
+
+  <!-- ========== EXECUTIVE LAYER ========== -->
+  <div class="entry-container">
+
+    <a href="../field-notes.html" class="back-link reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Field Notes
+    </a>
+
+    <div class="content-column">
+      <div class="entry-meta reveal">
+        <span class="entry-tag">Train</span>
+        <span class="entry-date">February 2026</span>
+      </div>
+
+      <h1 class="entry-title reveal">Foundations Training: Where Employee Journeys Start</h1>
+
+      <p class="entry-subtitle reveal">Most AI training is a workshop that evaporates by Friday. At Paramis, I deliver a transformation experience that treats ChatGPT and Claude as a work system of intelligences, modalities, and tools. And I build it so the training stays behind after I leave.</p>
+    </div>
+
+    <!-- Hero visual -->
+    <div class="hero-visual reveal">
+      <div class="hero-visual-label">What Ships With Every Module</div>
+      <div class="hero-visual-title">A Learning System, Not a Slide Deck</div>
+      <div class="hero-visual-sub">Eight formats per module, designed so the training embeds itself in how your people actually work.</div>
+      <div class="hero-format-grid">
+        <div class="hero-format-item">
+          <span class="hero-format-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="12" y2="16"/></svg></span>
+          <span class="hero-format-name">Presentations &amp; Data</span>
+        </div>
+        <div class="hero-format-item">
+          <span class="hero-format-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polygon points="10,8 16,12 10,16"/></svg></span>
+          <span class="hero-format-name">Live Recordings</span>
+        </div>
+        <div class="hero-format-item">
+          <span class="hero-format-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7z"/><line x1="12" y1="12" x2="12" y2="22"/><polyline points="2 7 12 12 22 7"/></svg></span>
+          <span class="hero-format-name">Skill Videos</span>
+        </div>
+        <div class="hero-format-item">
+          <span class="hero-format-icon"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3z"/><path d="M3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg></span>
+          <span class="hero-format-name">Summary Podcasts</span>
+        </div>
+        <div class="hero-format-item">
+          <span class="hero-format-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><polygon points="10,8 16,11 10,14"/><line x1="7" y1="22" x2="17" y2="22"/><line x1="12" y1="18" x2="12" y2="22"/></svg></span>
+          <span class="hero-format-name">Summary Videos</span>
+        </div>
+        <div class="hero-format-item">
+          <span class="hero-format-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span>
+          <span class="hero-format-name">Infographics</span>
+        </div>
+        <div class="hero-format-item">
+          <span class="hero-format-icon"><svg viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
+          <span class="hero-format-name">Prompt Packs</span>
+        </div>
+        <div class="hero-format-item">
+          <span class="hero-format-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="12" rx="2"/><circle cx="9" cy="10" r="1.5"/><circle cx="15" cy="10" r="1.5"/><path d="M8 20h8"/><line x1="12" y1="16" x2="12" y2="20"/></svg></span>
+          <span class="hero-format-name">Studio GPTs</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-column">
+      <!-- Executive summary -->
+      <div class="exec-summary reveal">
+        <p>Foundations is how Paramis starts every client engagement. It is a nine-week, eleven-module training program that teaches enterprise teams to work with ChatGPT and Claude as a coordinated system, not as a novelty. Every module ships as a complete content kit: live instruction, recordings, skill videos, audio and visual summaries, infographics, function-specific prompt packs, and custom GPTs that stay deployed long after the engagement ends. The goal is not AI awareness. The goal is embedded, permanent capability that the organization owns and keeps.</p>
+      </div>
+    </div>
+
+    <!-- Stat callouts -->
+    <div class="stats-row reveal">
+      <div class="stat-card">
+        <div class="stat-value">9 Weeks</div>
+        <div class="stat-label">not a half-day<br>workshop</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">8 Formats</div>
+        <div class="stat-label">per module, because<br>people learn differently</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">Latest Capabilities</div>
+        <div class="stat-label">training always mirrors<br>the latest functionality</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== DIVIDER ========== -->
+  <div class="section-divider">
+    <span>Keep reading &darr;</span>
+  </div>
+
+  <!-- ========== PRACTITIONER LAYER ========== -->
+  <div class="entry-container" style="padding-top: 0;">
+    <div class="narrative">
+
+      <!-- THE PROBLEM -->
+      <div class="narrative-section reveal">
+        <div class="section-label">The Problem Everyone Recognizes</div>
+        <p>Most organizations approach AI training the same way: book a half-day workshop, show people how to write prompts, hand out a PDF, and hope for the best. Six weeks later, adoption has flatlined. The people who were already curious kept experimenting. Everyone else went back to how they worked before.</p>
+        <p>The training did not fail because the content was bad. It failed because it was designed to be an event, not a system. A single session cannot change how an organization works. It can only create a moment of enthusiasm that fades as soon as the next quarterly deadline hits.</p>
+      </div>
+
+      <div class="pull-quote reveal">
+        <p>"You would not teach someone to manage a team in a half-day workshop. AI capability is the same kind of skill."</p>
+      </div>
+
+      <!-- THE PHILOSOPHY -->
+      <div class="narrative-section reveal">
+        <div class="section-label">AI as a Work System</div>
+        <p>Foundations starts from a different premise. ChatGPT and Claude are not productivity hacks you demonstrate in an afternoon. They are a system of intelligences, modalities, and tools that changes how knowledge work gets done. Teaching people to use that system takes weeks, not hours. It takes practice, not slides. And it takes a curriculum designed for how adults actually learn in a workplace: some people read, some watch, some listen, some need to try it with their hands on the keyboard.</p>
+        <p>At Paramis, I provide a transformation experience you can scale. Foundations is not a lecture series about AI. It is a structured, multi-week program where your people build real skills with real tools in the context of their actual jobs. Every module teaches a specific capability. Every capability maps to how your team works today and how they could work tomorrow.</p>
+      </div>
+
+      <!-- WHAT NINE WEEKS LOOKS LIKE -->
+      <div class="narrative-section reveal">
+        <div class="section-label">What Nine Weeks Looks Like</div>
+        <p>Foundations is an eleven-module curriculum delivered over nine weeks. Each week, your people work through a module together. There is a live session, but the session is not the training. The training is the full content kit that ships with every module: eight distinct formats designed for different learning styles, different schedules, and different levels of engagement.</p>
+        <p>Presentations and data files for the live instruction. Full session recordings for people who missed the meeting or want to review. Short skill videos that demonstrate one technique in under five minutes, no editing, no production overhead, just a live demonstration in ChatGPT. Audio summaries for the commute. Visual summaries for a quick refresh. Infographics that people pin to their desk or screenshot into Slack. Function-specific prompt packs with ready-to-run Deep Research prompts tailored to the learner's actual domain. And custom GPTs, led by the Knowledge Bot, that stay deployed as permanent co-facilitators between sessions and long after the engagement ends.</p>
+        <p>The result is that by week three, your people are not watching someone else use AI. They are using it in their work, building on what they learned last week, and getting better at it each session.</p>
+      </div>
+
+      <div class="pull-quote reveal">
+        <p>"Most AI training is a webinar and a PDF. We ship a learning system."</p>
+      </div>
+
+      <!-- WHY MULTI-FORMAT -->
+      <div class="narrative-section reveal">
+        <div class="section-label">Why Multi-Format Matters</div>
+        <p>The point is not volume. Volume is easy to produce and easy to ignore. The point is persistence and accessibility. Different people learn differently. Some read. Some watch. Some listen. Some interact. Some need a quick reference on their desk. Some need a prompt they can run in their next meeting.</p>
+        <p>By shipping all eight formats for every module, the training embeds itself into the organization's daily workflow rather than living in a forgotten SharePoint folder. The recordings get watched. The infographics get pinned. The prompt packs get used. And the Knowledge Bot keeps answering questions in real time, in the learner's own context, for as long as the organization keeps it deployed.</p>
+      </div>
+
+      <!-- THE PERSISTENCE ARGUMENT -->
+      <div class="narrative-section reveal">
+        <div class="section-label">What Stays Behind</div>
+        <p>This is the part that matters most to the people writing the check. When the engagement ends, the organization does not go back to zero. The content kit stays. The recordings stay. The prompt packs stay. The Knowledge Bot stays. The skills your people built over nine weeks are reinforced by a system that keeps working after the consultant is gone.</p>
+        <p>That is the design. Not a training event that creates a burst of enthusiasm. A training product that outlasts the engagement and becomes part of how the organization operates. The consultant leaves. The learning system does not.</p>
+      </div>
+
+      <div class="pull-quote reveal">
+        <p>"If your people can only learn from a live session, you have a training problem, not an AI problem."</p>
+      </div>
+
+    </div><!-- /narrative -->
+
+    <!-- ========== FORMAT CARDS ========== -->
+    <div class="formats-section reveal">
+      <div class="section-label">The Content Kit</div>
+      <div class="formats-grid">
+        <div class="format-card">
+          <span class="format-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="12" y2="16"/></svg></span>
+          <div class="format-name">Presentations &amp; Data</div>
+          <div class="format-desc">Module decks with supporting spreadsheets and reference material for live instruction.</div>
+        </div>
+        <div class="format-card">
+          <span class="format-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polygon points="10,8 16,12 10,16"/></svg></span>
+          <div class="format-name">Live Recordings</div>
+          <div class="format-desc">Full session recordings with real questions and real-time demonstrations.</div>
+        </div>
+        <div class="format-card">
+          <span class="format-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7z"/><line x1="12" y1="12" x2="12" y2="22"/><polyline points="2 7 12 12 22 7"/></svg></span>
+          <div class="format-name">Skill Videos</div>
+          <div class="format-desc">Single-take demos of specific techniques, under 5 minutes each.</div>
+        </div>
+        <div class="format-card">
+          <span class="format-icon"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3z"/><path d="M3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg></span>
+          <div class="format-name">Summary Podcasts</div>
+          <div class="format-desc">Audio summaries for passive review on commutes and walks.</div>
+        </div>
+        <div class="format-card">
+          <span class="format-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><polygon points="10,8 16,11 10,14"/><line x1="7" y1="22" x2="17" y2="22"/><line x1="12" y1="18" x2="12" y2="22"/></svg></span>
+          <div class="format-name">Summary Videos</div>
+          <div class="format-desc">Visual summaries for learners who prefer watching.</div>
+        </div>
+        <div class="format-card">
+          <span class="format-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span>
+          <div class="format-name">Infographics</div>
+          <div class="format-desc">One-page visual summaries per module and per business function.</div>
+        </div>
+        <div class="format-card">
+          <span class="format-icon"><svg viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
+          <div class="format-name">Prompt Packs</div>
+          <div class="format-desc">Ready-to-run Deep Research prompts tailored to specific job functions.</div>
+        </div>
+        <div class="format-card">
+          <span class="format-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="12" rx="2"/><circle cx="9" cy="10" r="1.5"/><circle cx="15" cy="10" r="1.5"/><path d="M8 20h8"/><line x1="12" y1="16" x2="12" y2="20"/></svg></span>
+          <div class="format-name">Studio GPTs</div>
+          <div class="format-desc">Custom GPTs deployed as persistent co-facilitators, led by the Knowledge Bot.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== CTA ========== -->
+    <div class="cta-section reveal">
+      <h3>This is what an AI transformation looks like in practice.</h3>
+      <p>If you want to see what Foundations could look like for your team, let's talk.</p>
+      <a href="mailto:contact@paramis.ai" class="cta-btn contact-btn">Get in Touch <span>&rarr;</span></a>
+    </div>
+
+  </div><!-- /entry-container -->
+
+  <!-- ========== FOOTER ========== -->
+  <div class="footer">
+    <p>&copy; 2026 <a href="../index.html">Paramis</a> &middot; <a href="mailto:woody@paramis.ai">woody@paramis.ai</a></p>
+  </div>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+    // Scroll progress bar
+    const scrollProgress = document.querySelector('.scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      scrollProgress.style.transform = `scaleX(${scrollTop / docHeight})`;
+    });
+
+    // Nav scroll behavior
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    mobileBtn.addEventListener('click', () => {
+      mobileBtn.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileBtn.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Cursor glow
+    const cursorGlow = document.querySelector('.cursor-glow');
+    document.addEventListener('mousemove', e => {
+      cursorGlow.style.left = e.clientX + 'px';
+      cursorGlow.style.top = e.clientY + 'px';
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => revealObserver.observe(el));
+  </script>
+
+  <!-- Contact Popup -->
+  <div class="contact-overlay" id="contactOverlay">
+    <div class="contact-popup" style="position:relative;">
+      <button class="popup-close" id="popupClose">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <h3>Get in Touch</h3>
+      <p class="popup-subtitle">Reach out to start a conversation</p>
+      <div class="email-display">contact@paramis.ai</div>
+      <div class="popup-actions">
+        <a href="mailto:contact@paramis.ai?subject=Website%20Inquiry" class="popup-btn popup-btn-primary">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6 L12 13 L22 6"/></svg>
+          Open Email Client
+        </a>
+        <button class="popup-btn" id="copyEmailBtn">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy Email Address
+        </button>
+      </div>
+      <div class="copied-toast" id="copiedToast">Copied to clipboard!</div>
+    </div>
+  </div>
+
+  <script>
+    // Contact Popup
+    const contactOverlay = document.getElementById('contactOverlay');
+    const popupClose = document.getElementById('popupClose');
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+    const copiedToast = document.getElementById('copiedToast');
+
+    function openContactPopup() {
+      contactOverlay.classList.add('open');
+    }
+    function closeContactPopup() {
+      contactOverlay.classList.remove('open');
+    }
+
+    document.querySelector('.contact-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      openContactPopup();
+    });
+
+    popupClose.addEventListener('click', closeContactPopup);
+    contactOverlay.addEventListener('click', (e) => {
+      if (e.target === contactOverlay) closeContactPopup();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeContactPopup();
+    });
+
+    copyEmailBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('contact@paramis.ai').then(() => {
+        copiedToast.classList.add('show');
+        setTimeout(() => copiedToast.classList.remove('show'), 2000);
+      });
+    });
+  </script>
+
+</body>
+</html>

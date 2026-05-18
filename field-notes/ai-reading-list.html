@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Reading List About AI | Paramis Field Notes</title>
+  <meta name="description" content="A practitioner-curated reading, watching, and listening list for smart professionals building AI literacy.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===========================================
+       PARAMIS FIELD NOTES — ENTRY PAGE
+       Design system inherited from index.html
+    =========================================== */
+    :root {
+      --primary: #4A90A4;
+      --primary-light: #7CB9E8;
+      --primary-dark: #2C5F72;
+      --accent: #F5A623;
+      --dark: #0a0a0a;
+      --dark-elevated: #111111;
+      --light: #ffffff;
+      --gray: #a0a0a0;
+      --gray-dim: #666;
+      --glass: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glow-primary: rgba(74, 144, 164, 0.4);
+      --glow-accent: rgba(245, 166, 35, 0.3);
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.5rem;
+      --text-2xl: 2rem;
+      --text-3xl: 2.5rem;
+      --text-4xl: 3.5rem;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* Noise texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.015;
+      z-index: 10000;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* Ambient gradient */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(74, 144, 164, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(245, 166, 35, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      z-index: 10002;
+      transform-origin: left;
+      transform: scaleX(0);
+      will-change: transform;
+    }
+
+    /* Cursor glow */
+    .cursor-glow {
+      position: fixed;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(74, 144, 164, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+    }
+
+    /* ===========================================
+       NAVIGATION
+    =========================================== */
+    nav {
+      position: fixed;
+      top: 0; width: 100%;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      background: rgba(10, 10, 10, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      padding: 0.75rem 5%;
+      background: rgba(10, 10, 10, 0.9);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--light);
+      font-weight: 600;
+      font-size: 1.35rem;
+      letter-spacing: -0.5px;
+    }
+    .logo img {
+      height: 36px;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover img {
+      transform: rotate(-5deg) scale(1.05);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-links a:hover { color: var(--light); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--light); }
+    .nav-links a.active::after { width: 100%; }
+
+    /* Mobile hamburger */
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 10001;
+    }
+    .mobile-menu-btn span {
+      width: 24px; height: 2px;
+      background: var(--light);
+      transition: all 0.3s ease;
+    }
+    .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+    .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ===========================================
+       ENTRY PAGE LAYOUT
+    =========================================== */
+    .entry-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 5%;
+    }
+
+    /* Back link */
+    .back-link {
+      padding-top: 6rem;
+      margin-bottom: 2rem;
+    }
+    .back-link a {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.3s;
+    }
+    .back-link a:hover { color: var(--primary-light); }
+    .back-link svg {
+      width: 16px; height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* Entry meta */
+    .entry-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .entry-tag {
+      color: var(--accent);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .entry-date {
+      color: var(--gray-dim);
+      font-size: var(--text-sm);
+    }
+
+    /* Entry title */
+    .entry-title {
+      font-size: var(--text-4xl);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, var(--light), var(--primary-light), var(--accent));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 6s ease-in-out infinite;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Entry subtitle */
+    .entry-subtitle {
+      color: var(--gray);
+      font-size: var(--text-lg);
+      line-height: 1.7;
+      max-width: 700px;
+      margin-bottom: 2rem;
+    }
+
+    /* Executive summary */
+    .exec-summary {
+      color: var(--light);
+      font-size: var(--text-base);
+      line-height: 1.9;
+      margin-bottom: 3rem;
+      max-width: 720px;
+    }
+
+    /* Section divider */
+    .section-divider {
+      text-align: center;
+      padding: 3rem 0;
+      color: var(--gray-dim);
+      font-size: var(--text-sm);
+      letter-spacing: 2px;
+      position: relative;
+    }
+    .section-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+    }
+    .section-divider span {
+      background: var(--dark);
+      padding: 0 1.5rem;
+      position: relative;
+    }
+
+    /* ===========================================
+       READING LIST SECTIONS
+    =========================================== */
+    .section-label {
+      color: var(--accent);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 1.5rem;
+    }
+    .section-label::before {
+      content: '-- ';
+      opacity: 0.5;
+    }
+
+    .narrative-section {
+      margin-bottom: 3rem;
+    }
+
+    .narrative-section p {
+      color: var(--gray);
+      font-size: var(--text-base);
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Sub-section headings (white, not gold) */
+    .sub-heading {
+      color: var(--light);
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      margin-top: 2.5rem;
+    }
+
+    /* ===========================================
+       READING LIST CARDS
+    =========================================== */
+    .reading-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .reading-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+
+    .reading-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.35rem;
+      gap: 1rem;
+    }
+
+    .reading-card-title {
+      color: var(--light);
+      font-size: var(--text-base);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .reading-card-title a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .reading-card-title a:hover {
+      color: var(--primary-light);
+    }
+    .reading-card-title a::after {
+      content: ' \2197';
+      font-size: 0.75em;
+      opacity: 0.4;
+      transition: opacity 0.3s;
+    }
+    .reading-card-title a:hover::after {
+      opacity: 0.8;
+    }
+
+    .reading-card-year {
+      color: var(--gray-dim);
+      font-size: var(--text-sm);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .reading-card-author {
+      color: var(--primary);
+      font-size: var(--text-sm);
+      margin-bottom: 0.75rem;
+    }
+
+    .reading-card-desc {
+      color: var(--gray);
+      font-size: var(--text-base);
+      line-height: 1.7;
+    }
+
+    /* ===========================================
+       CTA SECTION
+    =========================================== */
+    .cta-section {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin: 4rem 0 3rem;
+    }
+
+    .cta-section h3 {
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--light);
+    }
+
+    .cta-section p {
+      color: var(--gray);
+      font-size: var(--text-base);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 2rem;
+      border: 1px solid var(--primary);
+      border-radius: 4px;
+      color: var(--light);
+      font-family: inherit;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .cta-btn:hover {
+      background: var(--primary);
+      box-shadow: 0 0 30px var(--glow-primary);
+    }
+
+    /* ===========================================
+       GLOSSARY
+    =========================================== */
+    .glossary {
+      margin-bottom: 4rem;
+    }
+    .glossary details {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .glossary summary {
+      padding: 1.25rem;
+      color: var(--light);
+      font-weight: 600;
+      font-size: var(--text-base);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      user-select: none;
+    }
+    .glossary summary::-webkit-details-marker { display: none; }
+    .glossary summary::before {
+      content: '+';
+      color: var(--primary);
+      font-size: 1.2rem;
+      font-weight: 300;
+      width: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .glossary details[open] summary::before {
+      content: '\2212';
+    }
+    .glossary-content {
+      padding: 0 1.25rem 1.25rem;
+    }
+    .glossary dl {
+      display: grid;
+      gap: 1rem;
+    }
+    .glossary dt {
+      color: var(--primary-light);
+      font-weight: 600;
+      font-size: var(--text-sm);
+    }
+    .glossary dd {
+      color: var(--gray);
+      font-size: var(--text-sm);
+      line-height: 1.7;
+      margin-left: 0;
+    }
+
+    /* ===========================================
+       CONTACT POPUP
+    =========================================== */
+    .contact-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 10003;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact-overlay.open {
+      display: flex;
+    }
+    .contact-popup {
+      background: var(--dark-elevated);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 2.5rem;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+    .contact-popup h3 {
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--light), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .contact-popup .popup-subtitle {
+      color: var(--gray);
+      font-size: var(--text-sm);
+      margin-bottom: 1.5rem;
+    }
+    .contact-popup .email-display {
+      font-size: var(--text-lg);
+      font-weight: 500;
+      color: var(--primary-light);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+    .popup-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .popup-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      border: 1px solid var(--glass-border);
+      border-radius: 4px;
+      color: var(--light);
+      font-family: inherit;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      background: transparent;
+      letter-spacing: 0.5px;
+    }
+    .popup-btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+    .popup-btn-primary:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 0 20px var(--glow-primary);
+    }
+    .popup-btn:not(.popup-btn-primary):hover {
+      border-color: var(--primary);
+      background: rgba(74, 144, 164, 0.1);
+    }
+    .popup-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    .popup-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--gray);
+      cursor: pointer;
+      padding: 0.25rem;
+      transition: color 0.3s;
+    }
+    .popup-close:hover { color: var(--light); }
+    .popup-close svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    .copied-toast {
+      color: var(--accent);
+      font-size: var(--text-sm);
+      margin-top: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .copied-toast.show { opacity: 1; }
+
+    /* ===========================================
+       FOOTER
+    =========================================== */
+    .footer {
+      text-align: center;
+      padding: 3rem 5%;
+      border-top: 1px solid var(--glass-border);
+    }
+    .footer p {
+      color: var(--gray-dim);
+      font-size: var(--text-sm);
+    }
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .footer a:hover { color: var(--primary-light); }
+
+    /* ===========================================
+       SCROLL REVEAL
+    =========================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===========================================
+       RESPONSIVE
+    =========================================== */
+    @media (max-width: 768px) {
+      .mobile-menu-btn { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(10, 10, 10, 0.98);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+        z-index: 10000;
+      }
+      .nav-links.active { opacity: 1; visibility: visible; }
+      .nav-links a { font-size: 1.2rem; }
+      nav:has(.nav-links.active) {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: transparent;
+        border-bottom: none;
+      }
+
+      .entry-title { font-size: var(--text-3xl); }
+      .reading-card-header { flex-direction: column; gap: 0.25rem; }
+      .reading-card-year { align-self: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress"></div>
+
+  <!-- Cursor glow -->
+  <div class="cursor-glow"></div>
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav>
+    <a href="../index.html" class="logo">
+      <img src="../peregrine-logo.png" alt="Paramis">
+      <span>Paramis</span>
+    </a>
+    <div class="mobile-menu-btn">
+      <span></span><span></span><span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../field-notes.html" class="active">Field Notes</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+      <li><a href="../portal.html">Client Portal</a></li>
+    </ul>
+  </nav>
+
+  <!-- ========== ENTRY CONTENT ========== -->
+  <div class="entry-container">
+
+    <!-- Back link -->
+    <div class="back-link">
+      <a href="../field-notes.html">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Field Notes
+      </a>
+    </div>
+
+    <!-- Meta -->
+    <div class="entry-meta">
+      <span class="entry-tag">Read</span>
+      <span class="entry-date">February 2026</span>
+    </div>
+
+    <!-- Title -->
+    <h1 class="entry-title">A Reading List About AI</h1>
+
+    <!-- Subtitle -->
+    <p class="entry-subtitle">Things I have found interesting and useful, from a practitioner who works with AI daily and wants to help you cut through the noise.</p>
+
+    <!-- Executive Summary -->
+    <div class="exec-summary">
+      <p>This is a curated collection of what has shaped my thinking about AI over the past several years. It includes nonfiction and fiction, articles, podcasts, books, documentaries, television, and film. I maintain it for my clients at Paramis and for anyone building AI literacy who wants a starting point that is not a social media feed. The list is deliberately selective. I am not trying to cover everything. I am pointing to the sources that have been consistently thoughtful, consistently right, and consistently worth the time. The fiction is here because understanding AI requires more than technical fluency. It requires imagination about where this goes, and storytelling has always been how humans rehearse the future.</p>
+    </div>
+
+    <!-- Divider -->
+    <div class="section-divider">
+      <span>Keep reading &darr;</span>
+    </div>
+
+    <!-- ========== WHERE TO START ========== -->
+    <div class="narrative-section reveal">
+      <div class="section-label">Where to Start</div>
+      <p>The list is organized by format, not difficulty. If you are brand new to AI and want an accessible entry point, start with the documentaries and Ethan Mollick's writing. Both will give you a solid foundation without assuming any technical background. If you are already using ChatGPT or Claude daily and want to think more deeply about where this is heading, skip ahead to the fiction or the long-form essays by Leopold Aschenbrenner and AI 2027. Follow whatever pulls you in.</p>
+    </div>
+
+    <!-- ========== NONFICTION ========== -->
+    <div class="narrative-section reveal">
+      <div class="section-label">Nonfiction</div>
+
+      <!-- Articles -->
+      <h2 class="sub-heading">Newspapers, Magazines, and Long-form Articles</h2>
+      <div class="reading-cards">
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.oneusefulthing.org/" target="_blank" rel="noopener">One Useful Thing (Substack)</a></div>
+            <div class="reading-card-year">2021 &ndash; present</div>
+          </div>
+          <div class="reading-card-author">Ethan Mollick</div>
+          <div class="reading-card-desc">Virtually all of his posts are highly readable and very enjoyable. Sign up for his mailing list. He is simply the best.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.wired.com/tag/artificial-intelligence/" target="_blank" rel="noopener">Wired</a></div>
+            <div class="reading-card-year">Ongoing</div>
+          </div>
+          <div class="reading-card-author">Wired Magazine</div>
+          <div class="reading-card-desc">WIRED magazine currently maintains an excellent staff who write thoughtfully about AI from multiple perspectives.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://waitbutwhy.com/2015/01/artificial-intelligence-revolution-1.html" target="_blank" rel="noopener">The AI Revolution: The Road to Superintelligence</a></div>
+            <div class="reading-card-year">2015</div>
+          </div>
+          <div class="reading-card-author">Tim Urban</div>
+          <div class="reading-card-desc">Two longform articles that do a superb job explaining superintelligence. I do not endorse Tim Urban's political views. This is simply a great explainer.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://ai-2027.com/" target="_blank" rel="noopener">AI 2027</a></div>
+            <div class="reading-card-year">2025</div>
+          </div>
+          <div class="reading-card-author">AI 2027 Project</div>
+          <div class="reading-card-desc">A troubling but credible scenario sketch of what might unfold once we attain AGI in just a few years. A must-read, because things are happening very fast.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://situational-awareness.ai/" target="_blank" rel="noopener">Situational Awareness: The Decade Ahead</a></div>
+            <div class="reading-card-year">2024</div>
+          </div>
+          <div class="reading-card-author">Leopold Aschenbrenner</div>
+          <div class="reading-card-desc">A concise essay series arguing that today's foundation-model scaling puts AGI on track for the late-2020s, with a fast follow-on to super-intelligence, intense U.S.-China security competition, and an urgent need for hardened alignment and containment measures. Another must-read, written by a former OpenAI safety researcher.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/Structure-Scientific-Revolutions-50th-Anniversary/dp/0226458121" target="_blank" rel="noopener">The Structure of Scientific Revolutions</a></div>
+            <div class="reading-card-year">1962</div>
+          </div>
+          <div class="reading-card-author">Thomas S. Kuhn</div>
+          <div class="reading-card-desc">Origin of the term "paradigm shift." Shows how normal science hits anomalies, then flips wholesale to a new worldview, a useful lens for today's AI upheaval.</div>
+        </div>
+
+      </div>
+
+      <!-- Podcasts -->
+      <h2 class="sub-heading">Podcasts</h2>
+      <div class="reading-cards">
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://podcasts.apple.com/us/podcast/hard-fork/id1528594034" target="_blank" rel="noopener">Hard Fork</a></div>
+            <div class="reading-card-year">2022 &ndash; present</div>
+          </div>
+          <div class="reading-card-author">The New York Times</div>
+          <div class="reading-card-desc">Two reporters explore tech's cutting edge every week and translate it for regular humans.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://podcasts.apple.com/us/podcast/the-ezra-klein-show/id1548604447" target="_blank" rel="noopener">The Ezra Klein Show, AI Miniseries</a></div>
+            <div class="reading-card-year">2023 &ndash; present</div>
+          </div>
+          <div class="reading-card-author">The New York Times</div>
+          <div class="reading-card-desc">Recurring episodes where Ezra Klein interviews leading AI researchers and policy thinkers, offering accessible, deeply reported conversations on AI's societal impact. Note that most episodes are not about AI.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://podcasts.apple.com/us/podcast/the-ai-daily-brief-formerly-the-ai-breakdown/id1680633614" target="_blank" rel="noopener">The AI Daily Brief</a></div>
+            <div class="reading-card-year">2023 &ndash; present</div>
+          </div>
+          <div class="reading-card-author">Formerly The AI Breakdown</div>
+          <div class="reading-card-desc">A fast daily update that digs into the latest releases, news, and implications with a realistic, industry-savvy host.</div>
+        </div>
+
+      </div>
+
+      <!-- Books (Nonfiction) -->
+      <h2 class="sub-heading">Books</h2>
+      <div class="reading-cards">
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/Co-Intelligence-Living-Working-Ethan-Mollick/dp/059371671X" target="_blank" rel="noopener">Co-Intelligence</a></div>
+            <div class="reading-card-year">2024</div>
+          </div>
+          <div class="reading-card-author">Ethan Mollick</div>
+          <div class="reading-card-desc">An influential and approachable book about integrating assistants into your life. The calmest and most practical guide for introducing people to generative AI.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/Singularity-Nearer-Ray-Kurzweil/dp/0593300075" target="_blank" rel="noopener">The Singularity Is Nearer</a></div>
+            <div class="reading-card-year">2024</div>
+          </div>
+          <div class="reading-card-author">Ray Kurzweil</div>
+          <div class="reading-card-desc">Ray Kurzweil's predictions in 1999 in The Age of Spiritual Machines about how and when we build to AGI (he predicts 2029) were unique at the time, and the technical progress he describes has proven correct so far. This sequel to 2005's The Singularity is Near talks about where he thinks we will go next.</div>
+        </div>
+
+      </div>
+
+      <!-- Documentaries -->
+      <h2 class="sub-heading">Documentaries</h2>
+      <div class="reading-cards">
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.pbs.org/show/ai-unpacking-the-black-box/" target="_blank" rel="noopener">AI: Unpacking the Black Box</a></div>
+            <div class="reading-card-year">2024 &ndash; present</div>
+          </div>
+          <div class="reading-card-author">PBS</div>
+          <div class="reading-card-desc">Eight-part PBS series that breaks down AI's benefits, risks, and societal impacts. Very good and broad introduction to the world of artificial intelligence.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.netflix.com/title/81254224" target="_blank" rel="noopener">The Social Dilemma</a></div>
+            <div class="reading-card-year">2020</div>
+          </div>
+          <div class="reading-card-author">Jeff Orlowski</div>
+          <div class="reading-card-desc">A sobering look at how social media exploits us, problems AI will likely magnify.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.pbs.org/wgbh/nova/video/ai-revolution/" target="_blank" rel="noopener">NOVA: A.I. Revolution</a></div>
+            <div class="reading-card-year">2024</div>
+          </div>
+          <div class="reading-card-author">Miles O'Brien</div>
+          <div class="reading-card-desc">A concise overview of how AI works, where it is heading, and why it matters. Great general introduction.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========== FICTION ========== -->
+    <div class="narrative-section reveal">
+      <div class="section-label">Fiction</div>
+
+      <!-- Books (Fiction) -->
+      <h2 class="sub-heading">Books</h2>
+      <div class="reading-cards">
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/World-War-Oral-History-Zombie/dp/0770437400" target="_blank" rel="noopener">World War Z</a></div>
+            <div class="reading-card-year">2006</div>
+          </div>
+          <div class="reading-card-author">Max Brooks</div>
+          <div class="reading-card-desc">Not a book about AI, but an interesting book about how society reacts to transformative change. In this case, it is a zombie invasion. Max Brooks (Mel's son!) is brilliant and models this book after Studs Terkel's "The Good War." The book is different (and so much better) than the film!</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/Imaginary-Magnitude-Stanislaw-Lem/dp/0156441802" target="_blank" rel="noopener">Golem XIV</a></div>
+            <div class="reading-card-year">1981</div>
+          </div>
+          <div class="reading-card-author">Stanislaw Lem</div>
+          <div class="reading-card-desc">Presented as lectures by a superintelligent computer, this short novel offers a profound, early meditation on AI consciousness, evolution, and humanity's future.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/Neuromancer-William-Gibson/dp/0441569595" target="_blank" rel="noopener">Neuromancer</a></div>
+            <div class="reading-card-year">1984</div>
+          </div>
+          <div class="reading-card-author">William Gibson</div>
+          <div class="reading-card-desc">The seminal cyberpunk novel that coined "cyberspace," exploring emergent AIs, virtual reality, and corporate power in a gritty near future matrix.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/Snow-Crash-Novel-Neal-Stephenson/dp/0553380958" target="_blank" rel="noopener">Snow Crash</a></div>
+            <div class="reading-card-year">1992</div>
+          </div>
+          <div class="reading-card-author">Neal Stephenson</div>
+          <div class="reading-card-desc">A high octane satire that introduced the "Metaverse," viral code, and memetic hacking. Hugely influential on modern tech culture.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/Diamond-Age-Illustrated-Primer/dp/0553380966" target="_blank" rel="noopener">The Diamond Age: Or, A Young Lady's Illustrated Primer</a></div>
+            <div class="reading-card-year">1995</div>
+          </div>
+          <div class="reading-card-author">Neal Stephenson</div>
+          <div class="reading-card-desc">Follows a girl whose interactive AI powered book educates and guides her, exploring nanotechnology, societal stratification, and personalized learning. Super interesting relative to AI and education.</div>
+        </div>
+
+      </div>
+
+      <!-- Television -->
+      <h2 class="sub-heading">Television</h2>
+      <div class="reading-cards">
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.netflix.com/title/70264888" target="_blank" rel="noopener">Black Mirror</a></div>
+            <div class="reading-card-year">2011 &ndash; 2025</div>
+          </div>
+          <div class="reading-card-author">Charlie Brooker</div>
+          <div class="reading-card-desc">A dark anthology on technology and human nature. Start with Season 6, Episode 1 ("Joan Is Awful") if you want the least depressing entry. I did a research event with ChatGPT to rate the plausibility of the technologies you see in the first few episodes of the show, as you are interested.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://tv.apple.com/us/show/sunny/umc.cmc.7c5t9dde8dxoaxwyl5rkuw38p" target="_blank" rel="noopener">Sunny</a></div>
+            <div class="reading-card-year">2024</div>
+          </div>
+          <div class="reading-card-author">Apple TV+</div>
+          <div class="reading-card-desc">A mystery-thriller series starring Rashida Jones that shows plausible domestic interactions with humanoid assistants. Slow moving, interesting enough. Based on the book A Dark Manual by Colin O'Sullivan.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.netflix.com/title/81026915" target="_blank" rel="noopener">Better Than Us</a></div>
+            <div class="reading-card-year">2018 &ndash; 2019</div>
+          </div>
+          <div class="reading-card-author">Netflix</div>
+          <div class="reading-card-desc">Russian sci-fi drama about advanced domestic robots and drone tech that feels very plausible and very near-term, especially the surveillance technologies.</div>
+        </div>
+
+      </div>
+
+      <!-- Movies -->
+      <h2 class="sub-heading">Movies</h2>
+      <div class="reading-cards">
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/2001-Space-Odyssey-Keir-Dullea/dp/B000Q6GN9A" target="_blank" rel="noopener">2001: A Space Odyssey</a></div>
+            <div class="reading-card-year">1968</div>
+          </div>
+          <div class="reading-card-author">Stanley Kubrick</div>
+          <div class="reading-card-desc">For me, this is still the most accurate depiction of near-term AI capabilities. We are likely already at this point, in capability. Developed alongside Arthur C. Clarke's novel of the same name.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/Blade-Runner-Final-Harrison-Ford/dp/B000YIJW1Y" target="_blank" rel="noopener">Blade Runner</a></div>
+            <div class="reading-card-year">1982</div>
+          </div>
+          <div class="reading-card-author">Ridley Scott</div>
+          <div class="reading-card-desc">Imagines sentient (but not superintelligent) humanoids and the techno-capitalist world they inhabit. Based on Philip K. Dick's Do Androids Dream of Electric Sheep?</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/Minority-Report-Tom-Cruise/dp/B009IMBJTE" target="_blank" rel="noopener">Minority Report</a></div>
+            <div class="reading-card-year">2002</div>
+          </div>
+          <div class="reading-card-author">Steven Spielberg</div>
+          <div class="reading-card-desc">A kinetic thriller in which Precrime predicts murders before they happen; its fugitive chief must expose the system's flaws and reassert free will. Based on Philip K. Dick's 1956 short story "The Minority Report."</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/Her-Joaquin-Phoenix/dp/B00H7AZWFI" target="_blank" rel="noopener">Her</a></div>
+            <div class="reading-card-year">2013</div>
+          </div>
+          <div class="reading-card-author">Spike Jonze</div>
+          <div class="reading-card-desc">A wistful near-future romance in which a lonely writer falls for his operating-system assistant, probing how voice-based AI can meet (and strain) human emotional needs.</div>
+        </div>
+
+        <div class="reading-card">
+          <div class="reading-card-header">
+            <div class="reading-card-title"><a href="https://www.amazon.com/Ex-Machina-Domhnall-Gleeson/dp/B00XI092AC" target="_blank" rel="noopener">Ex Machina</a></div>
+            <div class="reading-card-year">2014</div>
+          </div>
+          <div class="reading-card-author">Alex Garland</div>
+          <div class="reading-card-desc">A taut chamber thriller in which a young coder is invited to give a Turing-style test to Ava, a beguiling humanoid android, sparking a game of manipulation and escape. An original screenplay (not adapted from a specific novel) that riffs on Alan Turing's 1950 paper "Computing Machinery and Intelligence" and long-standing "Frankenstein" creator-creation themes.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========== A NOTE ON SOURCES ========== -->
+    <div class="narrative-section reveal">
+      <div class="section-label">A Note on Sources</div>
+      <p>I do not recommend relying on social media or mainstream news coverage for AI literacy. The signal-to-noise ratio is too low. Most mainstream reporting either overhypes capabilities or repeats surface-level talking points. Social media is worse: it incentivizes hot takes, engagement bait, and confident speculation from people who are not building anything.</p>
+      <p>The sources on this list are here because they have been consistently thoughtful, consistently ahead of the curve, and consistently useful to me as a working practitioner. Ethan Mollick has been right about more things, more often, than anyone else writing publicly about AI. Leopold Aschenbrenner's analysis of the scaling trajectory has held up remarkably well. The podcasts listed here translate technical developments into plain language without dumbing them down. And the fiction on this list does something nonfiction cannot: it makes you feel what it might be like to live in the world these technologies are creating.</p>
+      <p>This list will grow. If you think something belongs here, I am always interested to hear about it.</p>
+    </div>
+
+    <!-- ========== CTA ========== -->
+    <div class="cta-section reveal">
+      <h3>AI literacy is the foundation for every AI decision your organization will make.</h3>
+      <p>If you want help building that foundation for your team, let's talk.</p>
+      <a href="mailto:contact@paramis.ai" class="cta-btn contact-btn">Get in Touch <span>&rarr;</span></a>
+    </div>
+
+    <!-- ========== GLOSSARY ========== -->
+    <div class="glossary reveal">
+      <details>
+        <summary>Glossary</summary>
+        <div class="glossary-content">
+          <dl>
+            <dt>Generative AI</dt>
+            <dd>AI systems that create new content (text, images, code, audio) rather than just classifying or predicting. ChatGPT, Claude, and Midjourney are examples.</dd>
+
+            <dt>AGI (Artificial General Intelligence)</dt>
+            <dd>A hypothetical AI system that can perform any intellectual task a human can. Current AI is narrow, meaning it excels at specific tasks but cannot generalize across all domains. AGI would close that gap.</dd>
+
+            <dt>Superintelligence</dt>
+            <dd>AI that surpasses human cognitive ability across virtually every domain, including scientific creativity, social skills, and general wisdom.</dd>
+
+            <dt>Foundation model</dt>
+            <dd>A large AI model trained on broad data that can be adapted to many tasks. GPT-4, Claude, and Gemini are foundation models.</dd>
+
+            <dt>Alignment</dt>
+            <dd>The challenge of ensuring AI systems pursue goals that humans actually want, rather than optimizing for something unintended.</dd>
+
+            <dt>Paradigm shift</dt>
+            <dd>A fundamental change in the basic concepts and practices of a discipline. Thomas Kuhn coined the term in The Structure of Scientific Revolutions.</dd>
+
+            <dt>Vibe coding</dt>
+            <dd>Writing software by describing what you want to an AI coding assistant rather than writing the code yourself. The human directs, the AI produces.</dd>
+          </dl>
+        </div>
+      </details>
+    </div>
+
+  </div><!-- /entry-container -->
+
+  <!-- ========== FOOTER ========== -->
+  <div class="footer">
+    <p>&copy; 2026 <a href="../index.html">Paramis</a> &middot; <a href="mailto:woody@paramis.ai">woody@paramis.ai</a></p>
+  </div>
+
+  <!-- ========== CONTACT POPUP ========== -->
+  <div class="contact-overlay" id="contactOverlay">
+    <div class="contact-popup" style="position:relative;">
+      <button class="popup-close" id="popupClose">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <h3>Get in Touch</h3>
+      <p class="popup-subtitle">Reach out to start a conversation</p>
+      <div class="email-display">contact@paramis.ai</div>
+      <div class="popup-actions">
+        <a href="mailto:contact@paramis.ai?subject=Website%20Inquiry" class="popup-btn popup-btn-primary">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6 L12 13 L22 6"/></svg>
+          Open Email Client
+        </a>
+        <button class="popup-btn" id="copyEmailBtn">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy Email Address
+        </button>
+      </div>
+      <div class="copied-toast" id="copiedToast">Copied to clipboard!</div>
+    </div>
+  </div>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+    // Scroll progress bar
+    const scrollProgress = document.querySelector('.scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight > 0) scrollProgress.style.transform = `scaleX(${scrollTop / docHeight})`;
+    });
+
+    // Nav scroll behavior
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    mobileBtn.addEventListener('click', () => {
+      mobileBtn.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileBtn.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Cursor glow
+    const cursorGlow = document.querySelector('.cursor-glow');
+    document.addEventListener('mousemove', e => {
+      cursorGlow.style.left = e.clientX + 'px';
+      cursorGlow.style.top = e.clientY + 'px';
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => revealObserver.observe(el));
+
+    // Contact Popup
+    const contactOverlay = document.getElementById('contactOverlay');
+    const popupClose = document.getElementById('popupClose');
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+    const copiedToast = document.getElementById('copiedToast');
+
+    function openContactPopup() {
+      contactOverlay.classList.add('open');
+    }
+    function closeContactPopup() {
+      contactOverlay.classList.remove('open');
+    }
+
+    document.querySelector('.contact-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      openContactPopup();
+    });
+
+    popupClose.addEventListener('click', closeContactPopup);
+    contactOverlay.addEventListener('click', (e) => {
+      if (e.target === contactOverlay) closeContactPopup();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeContactPopup();
+    });
+
+    copyEmailBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('contact@paramis.ai').then(() => {
+        copiedToast.classList.add('show');
+        setTimeout(() => copiedToast.classList.remove('show'), 2000);
+      });
+    });
+  </script>
+
+</body>
+</html>
