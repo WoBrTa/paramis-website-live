@@ -358,7 +358,7 @@ function render(slides) {
   <meta name="twitter:image" content="https://paramis.ai/field-notes/assets/mgi-new-orleans-hero.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">${schemaJson}</script>
   <style>
     :root {
@@ -384,7 +384,7 @@ function render(slides) {
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--dark);
       color: var(--light);
       line-height: 1.6;
