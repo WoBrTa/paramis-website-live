@@ -1,0 +1,33 @@
+# Paramis AI
+
+> AI strategy, training, and governance consulting for medtech, healthcare, and other regulated industries. Founded and run by Woody Taylor, based in Minneapolis, Minnesota. Paramis prepares companies and communities for a future where every knowledge worker manages AI agents as part of their daily job.
+
+Woody Taylor brings 25 years of operational leadership (GE Master Black Belt, Six Sigma, change management, enterprise transformation across healthcare, banking, and enterprise services) to AI adoption. The practice treats AI adoption as a real transformation program: phased milestones, measurable outcomes, and governance that holds up under scrutiny in regulated environments. The same person who presents the three-year plan also builds the first working prototype.
+
+Paramis coined and teaches the "Agent Manager" model: training knowledge workers to direct AI, verify its output, and iterate until the work is done (delegation fluency).
+
+## Services
+
+- [Plan](https://paramis.ai/#services): AI journey design. Maps change across six dimensions of a business (productivity, governance, data, products, customers, vendors) into a phased, multi-year roadmap.
+- [Train](https://paramis.ai/#services): Foundations and Advanced programs that turn employees into Agent Managers, from first interaction to delegation fluency. Includes embedded co-design of automations and adoption evaluation.
+- [Deploy](https://paramis.ai/#services): Governance frameworks and policies for AI adoption in regulated industries, treated as a change management event.
+- [Solution](https://paramis.ai/#services): Purpose-built AI solutions: multi-agent workflows, automated evaluation systems, and tools inside platforms like ChatGPT and Claude.
+- [Inform](https://paramis.ai/#services): Conference keynotes, executive briefings, and presentations for industry associations, trade groups, and corporate teams.
+- [Educate](https://paramis.ai/#services): Hands-on AI workshops for adult learners: multi-week programs, hackathons, and community sessions on safe, practical AI use.
+
+## Field Notes (case studies and published work)
+
+- [Your Cognitive Shift](https://paramis.ai/field-notes/mgi-new-orleans.html): Slide-by-slide walkthrough of Woody Taylor's keynote at MGI Worldwide North America's New Orleans conference on the operating-model shift AI is forcing on professional services firms. (May 2026)
+- [Multi-Agent Evaluation of Foundation Grant Applications](https://paramis.ai/field-notes/grant-review.html): A private foundation's full grant cycle reviewed by an agent team in a week. (March 2026)
+- [Foundations Training: Where Employee Journeys Start](https://paramis.ai/field-notes/foundations.html): The nine-week training system built so the learning stays behind after the trainer leaves. (February 2026)
+- [IdeaShelf: A Fast Build Using Adversarial Orchestration](https://paramis.ai/field-notes/ideashelf.html): A Chrome extension built, reviewed, and deployed in one evening by two AI agents, without the human writing a line of code. (February 2026)
+- [A Reading List About AI](https://paramis.ai/field-notes/ai-reading-list.html): Practitioner-curated reading, watching, and listening list for professionals building AI literacy. (February 2026)
+- [An Overview of Generative AI for the Electrical Industry](https://paramis.ai/field-notes/ea-summit.html): Keynote at the Electrical Association's Annual Industry Summit. (January 2026)
+- [Duck Duck Grey Duck](https://paramis.ai/field-notes/ai-technology-primer.html): A fast primer distinguishing RPA, machine learning, and generative AI.
+- [A Basic Safety Guide](https://paramis.ai/safety-guide/): Fifteen things to do to be harder to fool, harder to track, and harder to scam.
+
+## Contact
+
+- Email: contact@paramis.ai
+- LinkedIn: https://www.linkedin.com/in/woodytaylor/
+- Location: Minneapolis, Minnesota, USA

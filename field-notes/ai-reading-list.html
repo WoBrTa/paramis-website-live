@@ -5,6 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Reading List About AI | Paramis Field Notes</title>
   <meta name="description" content="A practitioner-curated reading, watching, and listening list for smart professionals building AI literacy.">
+  <link rel="canonical" href="https://paramis.ai/field-notes/ai-reading-list.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Paramis AI">
+  <meta property="og:title" content="A Reading List About AI | Paramis Field Notes">
+  <meta property="og:description" content="A practitioner-curated reading, watching, and listening list for smart professionals building AI literacy.">
+  <meta property="og:url" content="https://paramis.ai/field-notes/ai-reading-list.html">
+  <meta property="og:image" content="https://paramis.ai/peregrine-logo.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": "https://paramis.ai/field-notes/ai-reading-list.html",
+  "headline": "A Reading List About AI",
+  "description": "A practitioner-curated reading, watching, and listening list for smart professionals building AI literacy.",
+  "url": "https://paramis.ai/field-notes/ai-reading-list.html",
+  "image": "https://paramis.ai/peregrine-logo.png",
+  "author": {
+    "@type": "Person",
+    "name": "Woody Taylor",
+    "url": "https://paramis.ai/#about",
+    "sameAs": [
+      "https://www.linkedin.com/in/woodytaylor/"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Paramis AI",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://paramis.ai/peregrine-logo.png"
+    }
+  },
+  "dateModified": "2026-05-20",
+  "isPartOf": {
+    "@id": "https://paramis.ai/#website"
+  },
+  "datePublished": "2026-02"
+}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1192,11 +1231,32 @@
       if (e.key === 'Escape') closeContactPopup();
     });
 
-    copyEmailBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText('contact@paramis.ai').then(() => {
-        copiedToast.classList.add('show');
-        setTimeout(() => copiedToast.classList.remove('show'), 2000);
-      });
+    function fallbackCopyEmail(email) {
+      const textarea = document.createElement('textarea');
+      textarea.value = email;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    }
+
+    function showCopiedToast() {
+      copiedToast.classList.add('show');
+      setTimeout(() => copiedToast.classList.remove('show'), 2000);
+    }
+
+    copyEmailBtn.addEventListener('click', async () => {
+      const email = 'contact@paramis.ai';
+      try {
+        if (!navigator.clipboard) throw new Error('Clipboard API unavailable');
+        await navigator.clipboard.writeText(email);
+      } catch (error) {
+        fallbackCopyEmail(email);
+      }
+      showCopiedToast();
     });
   </script>
 

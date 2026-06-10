@@ -1,0 +1,13 @@
+# paramis.ai
+# AI crawlers are welcome here. This site is meant to be read by
+# humans and machines alike (GPTBot, OAI-SearchBot, ClaudeBot,
+# Claude-SearchBot, PerplexityBot, Google-Extended, Bingbot, CCBot, et al).
+
+User-agent: *
+Allow: /
+Disallow: /portal.html
+Disallow: /_backups/
+Disallow: /mockup-
+Disallow: /scripts/
+
+Sitemap: https://paramis.ai/sitemap.xml

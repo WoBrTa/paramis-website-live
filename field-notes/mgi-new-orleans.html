@@ -1229,11 +1229,32 @@
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') closeContactPopup();
     });
-    copyEmailBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText('contact@paramis.ai').then(() => {
-        copiedToast.classList.add('show');
-        setTimeout(() => copiedToast.classList.remove('show'), 2000);
-      });
+    function fallbackCopyEmail(email) {
+      const textarea = document.createElement('textarea');
+      textarea.value = email;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    }
+
+    function showCopiedToast() {
+      copiedToast.classList.add('show');
+      setTimeout(() => copiedToast.classList.remove('show'), 2000);
+    }
+
+    copyEmailBtn.addEventListener('click', async () => {
+      const email = 'contact@paramis.ai';
+      try {
+        if (!navigator.clipboard) throw new Error('Clipboard API unavailable');
+        await navigator.clipboard.writeText(email);
+      } catch (error) {
+        fallbackCopyEmail(email);
+      }
+      showCopiedToast();
     });
   </script>
 </body>

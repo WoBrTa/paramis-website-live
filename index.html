@@ -3,7 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paramis | AI Strategy Consulting</title>
+  <title>Paramis | AI Strategy, Training &amp; Governance for Medtech and Regulated Industries</title>
+  <meta name="description" content="Paramis prepares companies and communities for AI. Strategy roadmaps, Agent Manager training programs, and governance frameworks for medtech, healthcare, and regulated industries. Founded by Woody Taylor, Minneapolis.">
+  <link rel="canonical" href="https://paramis.ai/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Paramis AI">
+  <meta property="og:title" content="Paramis | AI Strategy, Training &amp; Governance for Regulated Industries">
+  <meta property="og:description" content="I prepare companies and communities for what will change. AI roadmaps, Agent Manager training, and governance that holds up under scrutiny.">
+  <meta property="og:url" content="https://paramis.ai/">
+  <meta property="og:image" content="https://paramis.ai/peregrine-logo.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Paramis | AI Strategy, Training &amp; Governance for Regulated Industries">
+  <meta name="twitter:description" content="I prepare companies and communities for what will change.">
+  <meta name="twitter:image" content="https://paramis.ai/peregrine-logo.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://paramis.ai/#organization",
+        "name": "Paramis AI",
+        "alternateName": "Paramis LLC",
+        "url": "https://paramis.ai/",
+        "logo": "https://paramis.ai/peregrine-logo.png",
+        "description": "AI strategy, training, and governance consulting for medtech, healthcare, and regulated industries. Roadmaps, Agent Manager training programs, governance frameworks, and applied AI solutions.",
+        "email": "contact@paramis.ai",
+        "founder": { "@id": "https://paramis.ai/#woody" },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Minneapolis",
+          "addressRegion": "MN",
+          "addressCountry": "US"
+        },
+        "areaServed": "United States",
+        "knowsAbout": ["AI adoption", "AI governance", "AI training", "change management", "medtech", "healthcare", "regulated industries", "agentic AI", "AI acceptable use policy"],
+        "makesOffer": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Plan", "description": "AI journey design: a phased, multi-year roadmap mapped across six dimensions of the business: productivity, governance, data, products, customers, and vendors." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Train", "description": "Foundations and Advanced programs that turn knowledge workers into Agent Managers: directing AI, verifying output, and iterating to delegation fluency." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Deploy", "description": "Governance frameworks and AI policies for regulated industries, treating AI deployment as a change management event." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Solution", "description": "Purpose-built AI solutions: multi-agent workflows, automated evaluation systems, and tools inside platforms like ChatGPT and Claude." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Inform", "description": "Conference keynotes, executive briefings, and presentations on AI for associations, trade groups, and corporate teams." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Educate", "description": "Hands-on AI workshops for adult learners: multi-week programs, hackathons, and community sessions on safe, practical AI use." } }
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://paramis.ai/#woody",
+        "name": "Woody Taylor",
+        "jobTitle": "Principal",
+        "worksFor": { "@id": "https://paramis.ai/#organization" },
+        "url": "https://paramis.ai/#about",
+        "image": "https://paramis.ai/headshot.jpg",
+        "sameAs": ["https://www.linkedin.com/in/woodytaylor/"],
+        "description": "AI consultant and trainer with 25 years of operational leadership. GE Master Black Belt. Treats AI adoption as enterprise transformation: phased milestones, measurable outcomes, governance that holds up under scrutiny.",
+        "knowsAbout": ["AI strategy", "AI governance", "workforce training", "Six Sigma", "change management", "enterprise transformation"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://paramis.ai/#website",
+        "url": "https://paramis.ai/",
+        "name": "Paramis AI",
+        "publisher": { "@id": "https://paramis.ai/#organization" }
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1382,12 +1447,33 @@
       if (e.key === 'Escape') closeContactPopup();
     });
 
+    function fallbackCopyEmail(email) {
+      const textarea = document.createElement('textarea');
+      textarea.value = email;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    }
+
+    function showCopiedToast() {
+      copiedToast.classList.add('show');
+      setTimeout(() => copiedToast.classList.remove('show'), 2000);
+    }
+
     // Copy email to clipboard
-    copyEmailBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText('contact@paramis.ai').then(() => {
-        copiedToast.classList.add('show');
-        setTimeout(() => copiedToast.classList.remove('show'), 2000);
-      });
+    copyEmailBtn.addEventListener('click', async () => {
+      const email = 'contact@paramis.ai';
+      try {
+        if (!navigator.clipboard) throw new Error('Clipboard API unavailable');
+        await navigator.clipboard.writeText(email);
+      } catch (error) {
+        fallbackCopyEmail(email);
+      }
+      showCopiedToast();
     });
   </script>
 </body>
