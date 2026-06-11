@@ -17,6 +17,7 @@ Paramis coined and teaches the "Agent Manager" model: training knowledge workers
 
 ## Field Notes (case studies and published work)
 
+- [The Minnesota Lakes Constellation](https://paramis.ai/field-notes/lakes-constellation.html): Every Minnesota lake drawn as a constellation from DNR data by Anthropic's Fable model working from a plain-English plan; interactive version at https://paramis.ai/lakes/. (June 2026)
 - [Your Cognitive Shift](https://paramis.ai/field-notes/mgi-new-orleans.html): Slide-by-slide walkthrough of Woody Taylor's keynote at MGI Worldwide North America's New Orleans conference on the operating-model shift AI is forcing on professional services firms. (May 2026)
 - [Multi-Agent Evaluation of Foundation Grant Applications](https://paramis.ai/field-notes/grant-review.html): A private foundation's full grant cycle reviewed by an agent team in a week. (March 2026)
 - [Foundations Training: Where Employee Journeys Start](https://paramis.ai/field-notes/foundations.html): The nine-week training system built so the learning stays behind after the trainer leaves. (February 2026)
