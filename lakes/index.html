@@ -141,6 +141,7 @@
 
   #dossier {
     position: fixed;
+    z-index: 5;
     top: 28px; right: 28px; bottom: 28px;
     width: min(400px, 32vw);
     background: var(--panel);
@@ -290,7 +291,11 @@
     display: none;
   }
   body.public #madeby { display: block; }
-  body.public.explore #madeby { display: none; }
+  /* In the public build the footer carries the data line; the caption's
+     second line would double it and collide on short windows. The caption
+     also rides higher, clear of the footer at any viewport height. */
+  body.public #caption .line2 { display: none; }
+  body.public #caption { bottom: 92px; }
 </style>
 </head>
 <body>
@@ -319,7 +324,7 @@
 <div id="tip"><span class="t-name"></span><br><span class="t-where"></span></div>
 <div id="hint"><b>Esc</b> clears &nbsp;&middot;&nbsp; <b>E</b> returns to show</div>
 <div id="madeby">
-  Minnesota DNR hydrography, June 2026 &nbsp;&middot;&nbsp; every lake of ten acres or more &nbsp;&middot;&nbsp; sales from public county assessor records<br>
+  <span id="fcount"></span>&nbsp;points &nbsp;&middot;&nbsp; Minnesota DNR hydrography, June 2026 &nbsp;&middot;&nbsp; sales from public county assessor records<br>
   Described in plain English and built with Claude &nbsp;&middot;&nbsp; paramis.ai
 </div>
 
@@ -353,6 +358,7 @@ const LAKES = DATA.lakes;          // [name, x, y, acres, countyIdx, depthFt]
 const COUNTIES = DATA.counties;
 const N = LAKES.length;
 document.getElementById('countline').textContent = N.toLocaleString('en-US');
+document.getElementById('fcount').textContent = N.toLocaleString('en-US');
 
 const canvas = document.getElementById('sky');
 const ctx = canvas.getContext('2d');
