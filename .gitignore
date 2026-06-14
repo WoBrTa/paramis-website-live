@@ -1,3 +1,7 @@
 field-notes/*-preview.png
 field-notes/mgi-field-notes-card-preview.png
 field-notes/assets/mgi-new-orleans-slide-*.png
+
+# Internal tooling and backups — never publish
+.claude/
+_backups/
