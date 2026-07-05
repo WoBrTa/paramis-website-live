@@ -46,1049 +46,645 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
   <style>
-    /* ===========================================
-       PARAMIS FIELD NOTES — ENTRY PAGE
-       Design system inherited from index.html
-    =========================================== */
+    /* ============================================================
+       PARAMIS FIELD NOTES: entry page, "Stoop" design system v1
+       Black and gold, no glass, no glow. Archivo carries the
+       structure, Bricolage Grotesque carries the words.
+       ============================================================ */
     :root {
-      --primary: #4A90A4;
-      --primary-light: #7CB9E8;
-      --primary-dark: #2C5F72;
-      --accent: #F5A623;
-      --dark: #0a0a0a;
-      --dark-elevated: #111111;
-      --light: #ffffff;
-      --gray: #a0a0a0;
-      --gray-dim: #666;
-      --glass: rgba(255, 255, 255, 0.03);
-      --glass-border: rgba(255, 255, 255, 0.08);
-      --glow-primary: rgba(74, 144, 164, 0.4);
-      --glow-accent: rgba(245, 166, 35, 0.3);
-      --text-xs: 0.75rem;
-      --text-sm: 0.875rem;
-      --text-base: 1rem;
-      --text-lg: 1.125rem;
-      --text-xl: 1.5rem;
-      --text-2xl: 2rem;
-      --text-3xl: 2.5rem;
-      --text-4xl: 3.5rem;
+      --ink: #0E0E0F;
+      --ink-2: #141416;
+      --bone: #ECE8E0;
+      --bone-dim: #8E897D;
+      --gold: #F5A623;
+      --steel: #1C242B;
+      --hair: rgba(236, 232, 224, 0.14);
+      --pad: clamp(1.25rem, 5vw, 5rem);
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     body {
-      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--dark);
-      color: var(--light);
+      font-family: 'Archivo', sans-serif;
+      font-stretch: 100%;
+      background: var(--ink);
+      color: var(--bone);
       line-height: 1.6;
       overflow-x: hidden;
-      cursor: default;
+    }
+    ::selection { background: var(--gold); color: var(--ink); }
+
+    /* content voice */
+    .article-date, .article-deck, .exec-summary p, .narrative p,
+    .pull-quote p, .stat-label, .cta-panel p,
+    .popup-subtitle, .email-display, .copied-toast, footer .fine {
+      font-family: 'Bricolage Grotesque', sans-serif;
     }
 
-    /* Noise texture */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      opacity: 0.015;
-      z-index: 10000;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    .label {
+      font-stretch: 118%; font-weight: 600; text-transform: uppercase;
+      font-size: 0.7rem; letter-spacing: 0.28em; color: var(--gold);
     }
 
-    /* Ambient gradient */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 20% 80%, rgba(74, 144, 164, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(245, 166, 35, 0.06) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    /* ===========================================
-       SCROLL PROGRESS BAR
-    =========================================== */
+    /* ---------- scroll progress ---------- */
     .scroll-progress {
-      position: fixed;
-      top: 0; left: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      z-index: 10002;
-      transform-origin: left;
-      transform: scaleX(0);
+      position: fixed; top: 0; left: 0; width: 100%;
+      height: 2px; background: var(--gold);
+      z-index: 150;
+      transform-origin: left; transform: scaleX(0);
       will-change: transform;
     }
 
-    /* ===========================================
-       CURSOR GLOW
-    =========================================== */
-    .cursor-glow {
-      position: fixed;
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(74, 144, 164, 0.12) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: opacity 0.3s ease;
-    }
-
-    /* ===========================================
-       NAVIGATION
-    =========================================== */
+    /* ---------- nav ---------- */
     nav {
-      position: fixed;
-      top: 0; width: 100%;
-      padding: 1rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      background: rgba(10, 10, 10, 0.7);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--glass-border);
-      transition: all 0.4s ease;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+      padding: 1.1rem var(--pad);
+      transition: background 0.3s ease, border-color 0.3s ease;
+      border-bottom: 1px solid transparent;
     }
-    nav.scrolled {
-      padding: 0.75rem 5%;
-      background: rgba(10, 10, 10, 0.9);
+    nav.scrolled { background: var(--ink); border-bottom-color: var(--hair); }
+    .brand {
+      display: flex; align-items: center; gap: 0.7rem;
+      text-decoration: none; color: var(--bone);
+      font-stretch: 120%; font-weight: 800; letter-spacing: 0.22em;
+      font-size: 1rem; text-transform: uppercase;
     }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      color: var(--light);
-      font-weight: 600;
-      font-size: 1.35rem;
-      letter-spacing: -0.5px;
-    }
-    .logo img {
-      height: 36px;
-      transition: transform 0.3s ease;
-    }
-    .logo:hover img {
-      transform: rotate(-5deg) scale(1.05);
-    }
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
+    .brand img { width: 30px; height: 30px; }
+    .nav-links { display: flex; align-items: center; gap: 2.2rem; list-style: none; }
     .nav-links a {
-      color: var(--gray);
-      text-decoration: none;
-      font-size: var(--text-sm);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      position: relative;
-      padding-bottom: 4px;
-      transition: color 0.3s;
+      color: var(--bone-dim); text-decoration: none; white-space: nowrap;
+      font-stretch: 115%; font-weight: 600; font-size: 0.68rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      transition: color 0.25s ease;
     }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 0; height: 1px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--gold); }
+    .nav-links a.active { color: var(--gold); }
+    .nav-links a.portal {
+      border: 1px solid var(--hair); padding: 0.55em 1.1em; color: var(--bone);
+      transition: all 0.25s ease;
     }
-    .nav-links a:hover { color: var(--light); }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-links a.active { color: var(--light); }
-    .nav-links a.active::after { width: 100%; }
+    .nav-links a.portal:hover { border-color: var(--gold); color: var(--gold); }
+    @media (max-width: 1360px) {
+      .nav-links { gap: 1.3rem; }
+      .nav-links a { font-size: 0.62rem; letter-spacing: 0.15em; }
+    }
+    .menu-btn {
+      display: none; background: none; border: 0; cursor: pointer;
+      flex-direction: column; gap: 6px; padding: 8px; z-index: 102;
+    }
+    .menu-btn span { width: 26px; height: 2px; background: var(--bone); transition: transform 0.3s ease, opacity 0.3s ease; }
+    .menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-    /* Mobile hamburger */
-    .mobile-menu-btn {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 10px;
-      z-index: 10001;
+    /* ---------- article header ---------- */
+    .article-head {
+      max-width: 1200px; margin: 0 auto;
+      padding: 9rem var(--pad) 3rem;
     }
-    .mobile-menu-btn span {
-      width: 24px; height: 2px;
-      background: var(--light);
-      transition: all 0.3s ease;
-    }
-    .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-    .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
-    .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
-    /* ===========================================
-       CONTENT LAYOUT
-    =========================================== */
-    .entry-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 8rem 5% 4rem;
-    }
-
-    .content-column {
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    /* Back link */
+    .content-col { max-width: 76ch; margin: 0 auto; }
     .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--primary);
-      text-decoration: none;
-      font-size: var(--text-sm);
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      margin-bottom: 2rem;
-      transition: color 0.3s;
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      color: var(--gold); text-decoration: none;
+      font-stretch: 115%; font-weight: 700; font-size: 0.66rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      margin-bottom: 2.6rem;
+      transition: color 0.25s ease;
     }
-    .back-link:hover { color: var(--primary-light); }
-    .back-link svg { width: 16px; height: 16px; }
-
-    /* Meta row */
-    .entry-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .back-link:hover, .back-link:focus-visible { color: var(--bone); }
+    .back-link svg { width: 15px; height: 15px; }
+    .article-head .label {
+      display: inline-flex; align-items: center; gap: 1rem;
       margin-bottom: 1.5rem;
     }
-    .entry-tag {
-      color: var(--accent);
-      font-size: var(--text-xs);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    .article-head .label::before { content: ''; width: 42px; height: 1px; background: var(--gold); }
+    h1 {
+      font-stretch: 112%; font-weight: 900; text-transform: uppercase;
+      font-size: clamp(2rem, 5.5vw, 4rem);
+      line-height: 0.96; letter-spacing: -0.01em;
+      margin-bottom: 1.1rem;
     }
-    .entry-date {
-      color: var(--gray-dim);
-      font-size: var(--text-sm);
-    }
-
-    /* Title */
-    .entry-title {
-      font-size: var(--text-4xl);
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(135deg, var(--light), var(--primary-light), var(--accent));
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientShift 6s ease-in-out infinite;
-    }
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+    .article-date { color: var(--bone-dim); font-size: 0.92rem; margin-bottom: 1.8rem; }
+    .article-deck {
+      color: var(--bone-dim);
+      font-size: clamp(1rem, 1.5vw, 1.18rem); line-height: 1.65;
+      max-width: 52ch;
     }
 
-    /* Subtitle */
-    .entry-subtitle {
-      color: var(--gray);
-      font-size: var(--text-lg);
-      line-height: 1.7;
-      max-width: 700px;
-      margin-bottom: 3rem;
-    }
+    /* ---------- article body ---------- */
+    .article-body { max-width: 1200px; margin: 0 auto; padding: 0 var(--pad); }
+    .narrative-body { padding-bottom: 6.5rem; }
 
-    /* ===========================================
-       HERO IMAGE
-    =========================================== */
-    .hero-infographic {
-      max-width: 1200px;
-      margin: 0 auto 3rem;
-      cursor: pointer;
-      position: relative;
-      border-radius: 4px;
-      overflow: hidden;
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* hero figure + lightbox trigger */
+    .hero-fig {
+      position: relative; margin-bottom: 3.2rem;
+      border: 1px solid var(--hair);
+      cursor: zoom-in;
+      transition: border-color 0.3s ease;
     }
-    .hero-infographic:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 40px rgba(74, 144, 164, 0.15);
-    }
-    .hero-infographic img {
-      width: 100%;
-      display: block;
-    }
-    .hero-infographic .zoom-hint {
-      position: absolute;
-      top: 1rem; right: 1rem;
-      background: rgba(0, 0, 0, 0.7);
-      color: var(--gray);
-      font-size: var(--text-xs);
-      padding: 0.35rem 0.75rem;
-      border-radius: 4px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
+    .hero-fig:hover, .hero-fig:focus-visible { border-color: rgba(245, 166, 35, 0.45); }
+    .hero-fig img { width: 100%; display: block; }
+    .zoom-hint {
+      position: absolute; top: 0.9rem; right: 0.9rem;
+      background: var(--ink); border: 1px solid var(--hair);
+      color: var(--bone-dim);
+      font-stretch: 115%; font-weight: 600; font-size: 0.58rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      padding: 0.55em 1em;
+      opacity: 0; transition: opacity 0.3s ease;
       pointer-events: none;
     }
-    .hero-infographic:hover .zoom-hint { opacity: 1; }
+    .hero-fig:hover .zoom-hint { opacity: 1; }
 
-    /* ===========================================
-       EXECUTIVE SUMMARY
-    =========================================== */
-    .exec-summary {
-      color: var(--light);
-      font-size: var(--text-base);
-      line-height: 1.9;
-      margin-bottom: 3rem;
-    }
+    /* executive summary: opening paragraph carries --bone */
+    .exec-summary { margin-bottom: 3.8rem; }
+    .exec-summary p { color: var(--bone); font-size: 1.05rem; line-height: 1.75; max-width: 70ch; }
 
-    /* ===========================================
-       STAT CALLOUTS
-    =========================================== */
+    /* stat callouts */
     .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-bottom: 4rem;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem;
+      margin-bottom: 4.5rem;
     }
-    .stat-card {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 8px;
-      padding: 2rem 1.5rem;
-      text-align: center;
-    }
+    .stat-item { border-top: 1px solid var(--hair); padding-top: 1.3rem; }
     .stat-value {
-      font-size: var(--text-2xl);
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--light), var(--primary-light), var(--accent));
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientShift 6s ease-in-out infinite;
-      line-height: 1.2;
-      margin-bottom: 0.5rem;
+      font-stretch: 112%; font-weight: 900; text-transform: uppercase;
+      font-size: clamp(1.6rem, 2.8vw, 2.3rem); line-height: 1.05;
+      font-variant-numeric: tabular-nums;
     }
-    .stat-label {
-      color: var(--gray-dim);
-      font-size: var(--text-sm);
-      line-height: 1.4;
+    .stat-label { color: var(--bone-dim); font-size: 0.9rem; line-height: 1.5; margin-top: 0.6rem; }
+
+    /* cta panels */
+    .cta-panel {
+      background: var(--steel); border: 1px solid var(--hair);
+      padding: 2.8rem 2rem; text-align: center;
+      margin-bottom: 4.5rem;
+    }
+    .cta-panel.final { background: var(--ink-2); margin-top: 4rem; margin-bottom: 0; }
+    .cta-panel h3 {
+      font-stretch: 112%; font-weight: 800; text-transform: uppercase;
+      font-size: 1.25rem; line-height: 1.3; letter-spacing: 0.01em;
+      margin-bottom: 0.7rem;
+    }
+    .cta-panel p { color: var(--bone-dim); font-size: 1rem; line-height: 1.7; margin-bottom: 1.8rem; }
+    .cta-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; justify-content: center; }
+    .btn {
+      display: inline-block;
+      background: var(--gold); color: var(--ink); border: 1px solid var(--gold);
+      text-decoration: none;
+      font-stretch: 115%; font-weight: 800; text-transform: uppercase;
+      font-size: 0.72rem; letter-spacing: 0.2em;
+      padding: 1.1em 2.1em;
+      transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    }
+    .btn:hover, .btn:focus-visible { background: var(--bone); border-color: var(--bone); }
+    .btn.ghost { background: none; color: var(--bone); border-color: var(--hair); }
+    .btn.ghost:hover, .btn.ghost:focus-visible { background: none; border-color: var(--gold); color: var(--gold); }
+
+    /* divider */
+    .divider {
+      max-width: 1200px; margin: 0 auto 4.5rem;
+      padding: 0 var(--pad);
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--hair); }
+    .divider span {
+      color: var(--bone-dim);
+      font-stretch: 115%; font-weight: 600; font-size: 0.62rem;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      white-space: nowrap;
     }
 
-    /* ===========================================
-       DIVIDER
-    =========================================== */
-    .section-divider {
-      max-width: 720px;
-      margin: 0 auto 4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-    }
-    .section-divider::before,
-    .section-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
-    }
-    .section-divider span {
-      color: var(--gray-dim);
-      font-size: var(--text-sm);
-      font-weight: 400;
-      letter-spacing: 1px;
-    }
-
-    /* ===========================================
-       NARRATIVE BODY
-    =========================================== */
-    .narrative {
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .narrative .section-label {
-      color: var(--accent);
-      font-size: var(--text-xs);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      margin-bottom: 1.5rem;
-    }
-    .narrative .section-label::before {
-      content: '-- ';
-      opacity: 0.5;
-    }
-
-    .narrative h3 {
-      display: none;
-    }
-
+    /* ---------- narrative ---------- */
+    .narrative-section { margin-bottom: 3.6rem; }
+    .sec-head { display: flex; align-items: baseline; gap: 1.4rem; margin-bottom: 1.6rem; }
+    .sec-head .label { white-space: nowrap; }
+    .sec-head::after { content: ''; flex: 1; height: 1px; background: var(--hair); align-self: center; }
     .narrative p {
-      color: var(--gray);
-      font-size: var(--text-base);
-      line-height: 1.9;
-      margin-bottom: 1.5rem;
+      color: var(--bone-dim); font-size: 1.05rem; line-height: 1.75;
+      max-width: 70ch; margin-bottom: 1.4rem;
     }
-
-    .narrative-section {
-      margin-bottom: 3.5rem;
-    }
-
-    /* ===========================================
-       PULL QUOTES
-    =========================================== */
+    .narrative p:last-child { margin-bottom: 0; }
+    .narrative a { color: var(--gold); text-decoration: underline; text-underline-offset: 4px; }
+    .narrative a:hover, .narrative a:focus-visible { color: var(--bone); }
     .pull-quote {
-      border-left: 2px solid;
-      border-image: linear-gradient(to bottom, var(--primary), var(--accent)) 1;
-      padding: 1.5rem 0 1.5rem 2rem;
-      margin: 2.5rem 0;
+      border-left: 3px solid var(--gold);
+      padding: 0.4rem 0 0.4rem 1.4rem;
+      margin: 2.4rem 0;
     }
     .pull-quote p {
-      color: var(--light) !important;
-      font-size: var(--text-xl) !important;
-      line-height: 1.6 !important;
-      font-weight: 400;
-      font-style: italic;
-      margin-bottom: 0 !important;
+      color: var(--bone); font-style: italic;
+      font-size: 1.22rem; line-height: 1.55;
+      margin-bottom: 0; max-width: 60ch;
     }
 
-    /* ===========================================
-       PROCESS PHASE CARDS
-    =========================================== */
-    .phase-section {
-      max-width: 1000px;
-      margin: 0 auto 4rem;
-    }
-    .phase-section .section-label {
-      color: var(--accent);
-      font-size: var(--text-xs);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-    .phase-section .section-label::before {
-      content: '-- ';
-      opacity: 0.5;
-    }
-    .phase-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-    }
-    .phase-card {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 8px;
-      padding: 1.25rem;
-    }
-    .phase-card .phase-name {
-      color: var(--light);
-      font-size: var(--text-base);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    .phase-card .phase-desc {
-      color: var(--gray-dim);
-      font-size: var(--text-sm);
-      line-height: 1.5;
-    }
-
-    /* ===========================================
-       CTA SECTION
-    =========================================== */
-    .cta-section {
-      max-width: 720px;
-      margin: 0 auto 4rem;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-    .cta-section h3 {
-      color: var(--light);
-      font-size: var(--text-xl);
-      font-weight: 600;
-      margin-bottom: 1rem;
-      line-height: 1.4;
-    }
-    .cta-section p {
-      color: var(--gray);
-      font-size: var(--text-base);
-      margin-bottom: 2rem;
-      line-height: 1.7;
-    }
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.85rem 2.5rem;
-      border: 1px solid var(--primary);
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: var(--text-sm);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      border-radius: 4px;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s ease;
-    }
-    .cta-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: -1;
-    }
-    .cta-btn:hover {
-      color: var(--light);
-      border-color: var(--primary);
-    }
-    .cta-btn:hover::before { opacity: 1; }
-
-    /* ===========================================
-       LIGHTBOX
-    =========================================== */
+    /* ---------- lightbox ---------- */
     .lightbox-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.92);
-      z-index: 10003;
-      cursor: zoom-out;
-      align-items: center;
-      justify-content: center;
+      display: none; position: fixed; inset: 0;
+      background: rgba(14, 14, 15, 0.95);
+      z-index: 400; cursor: zoom-out;
+      align-items: center; justify-content: center;
       padding: 2rem;
     }
-    .lightbox-overlay.active {
-      display: flex;
-    }
+    .lightbox-overlay.active { display: flex; }
     .lightbox-overlay img {
-      max-width: 95vw;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 4px;
+      max-width: 95vw; max-height: 90vh; object-fit: contain;
+      border: 1px solid var(--hair);
     }
     .lightbox-close {
-      position: absolute;
-      top: 1.5rem; right: 1.5rem;
-      color: var(--gray);
-      font-size: 2rem;
-      cursor: pointer;
-      width: 40px; height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: color 0.3s;
+      position: absolute; top: 1.2rem; right: 1.5rem;
+      color: var(--bone-dim); font-size: 2rem; cursor: pointer;
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.25s ease;
     }
-    .lightbox-close:hover { color: var(--light); }
+    .lightbox-close:hover { color: var(--gold); }
 
-    /* ===========================================
-       FOOTER
-    =========================================== */
-    .footer {
-      text-align: center;
-      padding: 3rem 5%;
-      border-top: 1px solid var(--glass-border);
-    }
-    .footer p {
-      color: var(--gray-dim);
-      font-size: var(--text-sm);
-    }
-    .footer a {
-      color: var(--primary);
-      text-decoration: none;
-    }
-    .footer a:hover { color: var(--primary-light); }
-
-    /* ===========================================
-       SCROLL REVEAL
-    =========================================== */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-
-    /* ===========================================
-       RESPONSIVE
-    =========================================== */
-    @media (max-width: 768px) {
-      .mobile-menu-btn { display: flex; }
-      .nav-links {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        background: rgba(10, 10, 10, 0.98);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2rem;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.4s ease;
-        z-index: 10000;
-      }
-      .nav-links.active { opacity: 1; visibility: visible; }
-      .nav-links a { font-size: 1.2rem; }
-      nav:has(.nav-links.active) {
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        background: transparent;
-        border-bottom: none;
-      }
-
-      .entry-title { font-size: var(--text-3xl); }
-      .stat-value { font-size: var(--text-xl); }
-      .stats-row { grid-template-columns: 1fr; gap: 1rem; }
-      .phase-grid { grid-template-columns: 1fr 1fr; }
-      .pull-quote { padding-left: 1.25rem; }
-      .pull-quote p { font-size: var(--text-lg) !important; }
-    }
-
-    @media (max-width: 480px) {
-      .entry-meta { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-      .phase-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ===========================================
-       CONTACT POPUP
-    =========================================== */
+    /* ---------- contact popup ---------- */
     .contact-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 10003;
-      display: none;
-      align-items: center;
-      justify-content: center;
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(14, 14, 15, 0.88);
+      display: none; align-items: center; justify-content: center;
+      padding: 1.5rem;
     }
-    .contact-overlay.open {
-      display: flex;
-    }
+    .contact-overlay.open { display: flex; }
     .contact-popup {
-      background: var(--dark-elevated);
-      border: 1px solid var(--glass-border);
-      border-radius: 8px;
-      padding: 2.5rem;
-      max-width: 420px;
-      width: 90%;
+      position: relative;
+      background: var(--ink-2); border: 1px solid var(--gold);
+      padding: 2.8rem 2.5rem 2.5rem; max-width: 420px; width: 100%;
       text-align: center;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     }
     .contact-popup h3 {
-      font-size: var(--text-xl);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, var(--light), var(--primary-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-stretch: 115%; font-weight: 800; text-transform: uppercase;
+      font-size: 1rem; letter-spacing: 0.2em; margin-bottom: 0.6rem;
     }
-    .contact-popup .popup-subtitle {
-      color: var(--gray);
-      font-size: var(--text-sm);
-      margin-bottom: 1.5rem;
-    }
-    .contact-popup .email-display {
-      font-size: var(--text-lg);
-      font-weight: 500;
-      color: var(--primary-light);
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.5px;
-    }
-    .popup-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
+    .popup-subtitle { color: var(--bone-dim); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .email-display { font-size: 1.1rem; font-weight: 600; color: var(--gold); margin-bottom: 1.6rem; letter-spacing: 0.03em; }
+    .popup-actions { display: flex; flex-direction: column; gap: 0.75rem; }
     .popup-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.85rem 1.5rem;
-      border: 1px solid var(--glass-border);
-      border-radius: 4px;
-      color: var(--light);
-      font-family: inherit;
-      font-size: var(--text-sm);
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      background: transparent;
-      letter-spacing: 0.5px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.95em 1.5em; cursor: pointer; text-decoration: none;
+      font-family: 'Archivo', sans-serif; font-stretch: 115%; font-weight: 700;
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     }
-    .popup-btn-primary {
-      background: var(--primary);
-      border-color: var(--primary);
-    }
-    .popup-btn-primary:hover {
-      background: var(--primary-dark);
-      box-shadow: 0 0 20px var(--glow-primary);
-    }
-    .popup-btn:not(.popup-btn-primary):hover {
-      border-color: var(--primary);
-      background: rgba(74, 144, 164, 0.1);
-    }
-    .popup-btn svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      stroke-width: 2;
-      fill: none;
-    }
+    .popup-btn.primary { background: var(--gold); color: var(--ink); border: 1px solid var(--gold); }
+    .popup-btn.primary:hover, .popup-btn.primary:focus-visible { background: var(--bone); border-color: var(--bone); }
+    .popup-btn.secondary { background: none; color: var(--bone); border: 1px solid var(--hair); }
+    .popup-btn.secondary:hover, .popup-btn.secondary:focus-visible { border-color: var(--gold); color: var(--gold); }
+    .popup-btn svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 2; fill: none; }
     .popup-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: none;
-      color: var(--gray);
-      cursor: pointer;
-      padding: 0.25rem;
-      transition: color 0.3s;
+      position: absolute; top: 0.9rem; right: 0.9rem;
+      background: none; border: 0; color: var(--bone-dim); cursor: pointer; padding: 0.3rem;
+      transition: color 0.25s ease;
     }
-    .popup-close:hover { color: var(--light); }
-    .popup-close svg {
-      width: 20px;
-      height: 20px;
-      stroke: currentColor;
-      stroke-width: 2;
-      fill: none;
-    }
-    .copied-toast {
-      color: var(--accent);
-      font-size: var(--text-sm);
-      margin-top: 0.5rem;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
+    .popup-close:hover, .popup-close:focus-visible { color: var(--gold); }
+    .popup-close svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; fill: none; }
+    .copied-toast { color: var(--gold); font-size: 0.85rem; margin-top: 0.9rem; opacity: 0; transition: opacity 0.3s ease; }
     .copied-toast.show { opacity: 1; }
+
+    /* ---------- footer ---------- */
+    footer {
+      padding: 2.2rem var(--pad);
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      color: var(--bone-dim); font-size: 0.78rem; letter-spacing: 0.06em;
+      border-top: 1px solid var(--hair);
+    }
+    footer .mark { display: flex; align-items: center; gap: 0.6rem; font-stretch: 118%; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; font-size: 0.65rem; color: var(--bone); }
+    footer .mark img { width: 24px; height: 24px; }
+    footer a { color: var(--bone-dim); text-decoration: none; transition: color 0.25s ease; }
+    footer a:hover, footer a:focus-visible { color: var(--gold); }
+
+    /* ---------- reveals ---------- */
+    .rv { opacity: 0; transform: translateY(26px); }
+    .rv.in { transition: opacity 0.55s cubic-bezier(0.2, 0.9, 0.2, 1), transform 0.55s cubic-bezier(0.2, 0.9, 0.2, 1); opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rv { transform: none !important; opacity: 1 !important; transition: none !important; }
+      .zoom-hint { transition: none; }
+      .hero-fig, .btn, .popup-btn { transition: none; }
+    }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 1024px) {
+      .menu-btn { display: flex; }
+      .nav-links {
+        position: fixed; inset: 0; background: var(--ink);
+        flex-direction: column; justify-content: center; gap: 2.4rem;
+        opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      .nav-links.open { opacity: 1; visibility: visible; }
+      .nav-links a { font-size: 1.05rem; }
+    }
+    @media (max-width: 768px) {
+      .stats-row { grid-template-columns: 1fr; gap: 2rem; }
+      .pull-quote p { font-size: 1.1rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Scroll progress bar -->
-  <div class="scroll-progress"></div>
+<!-- Scroll progress bar -->
+<div class="scroll-progress" aria-hidden="true"></div>
 
-  <!-- Cursor glow -->
-  <div class="cursor-glow"></div>
+<!-- Lightbox for hero image -->
+<div class="lightbox-overlay" id="lightbox">
+  <div class="lightbox-close">&times;</div>
+  <img id="lightbox-img" src="" alt="">
+</div>
 
-  <!-- Lightbox for hero image -->
-  <div class="lightbox-overlay" id="lightbox">
-    <div class="lightbox-close">&times;</div>
-    <img id="lightbox-img" src="" alt="">
-  </div>
+<!-- NAV -->
+<nav id="nav">
+  <a href="../index.html" class="brand" aria-label="Paramis home">
+    <img src="../peregrine-logo.png" alt="" width="30" height="30">
+    Paramis
+  </a>
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="../index.html#services">Services</a></li>
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../field-notes.html" class="active">Field Notes</a></li>
+    <li><a href="../safety-guide/">Safety</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+    <li><a href="../portal.html" class="portal">Client Portal</a></li>
+  </ul>
+</nav>
 
-  <!-- ========== NAVIGATION ========== -->
-  <nav>
-    <a href="../index.html" class="logo">
-      <img src="../peregrine-logo.png" alt="Paramis">
-      <span>Paramis</span>
-    </a>
-    <div class="mobile-menu-btn">
-      <span></span><span></span><span></span>
-    </div>
-    <ul class="nav-links">
-      <li><a href="../index.html#services">Services</a></li>
-      <li><a href="../index.html#about">About</a></li>
-      <li><a href="../field-notes.html" class="active">Field Notes</a></li>
-      <li><a href="../index.html#contact">Contact</a></li>
-      <li><a href="../portal.html">Client Portal</a></li>
-    </ul>
-  </nav>
-
-  <!-- ========== EXECUTIVE LAYER ========== -->
-  <div class="entry-container">
-
-    <a href="../field-notes.html" class="back-link reveal">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+<!-- ========== ARTICLE HEADER ========== -->
+<header class="article-head">
+  <div class="content-col">
+    <a href="../field-notes.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       Field Notes
     </a>
+    <span class="label">Build</span>
+    <h1>The Minnesota Lakes Constellation</h1>
+    <p class="article-date">June 2026</p>
+    <p class="article-deck">I handed Fable a plan written in plain English and got back every lake in Minnesota, drawn as a constellation. This note is mostly about how little I did.</p>
+  </div>
+</header>
 
-    <div class="content-column">
-      <div class="entry-meta reveal">
-        <span class="entry-tag">Build</span>
-        <span class="entry-date">June 2026</span>
-      </div>
+<!-- ========== EXECUTIVE LAYER ========== -->
+<div class="article-body">
 
-      <h1 class="entry-title reveal">The Minnesota Lakes Constellation</h1>
+  <!-- Hero image -->
+  <figure class="hero-fig rv" onclick="openLightbox(this.querySelector('img').src)">
+    <span class="zoom-hint">Click to enlarge</span>
+    <img src="assets/lakes-constellation-hero.png" alt="All 14,154 Minnesota lakes rendered as points of light forming the shape of the state, no outline drawn" loading="lazy">
+  </figure>
 
-      <p class="entry-subtitle reveal">I handed Fable a plan written in plain English and got back every lake in Minnesota, drawn as a constellation. This note is mostly about how little I did.</p>
+  <div class="content-col">
+    <!-- Executive summary -->
+    <div class="exec-summary rv">
+      <p>I needed an opener for a client summit: every lake in Minnesota as a point of light, no state outline drawn, the lakes alone forming the shape. I wrote what I wanted in plain English, handed it to Fable, Anthropic's newest Claude model, and watched. It pulled the state's official hydrography data, validated the lake counts against known ground truth, wrote the rendering code, caught its own mistakes, and produced a single file that runs anywhere with no internet connection. My job was art direction and judgment calls. The build was an early exploration of what hands-off looks like when the model is good enough to be handed the whole problem.</p>
     </div>
+  </div>
 
-    <!-- Hero image -->
-    <div class="hero-infographic reveal" onclick="openLightbox(this.querySelector('img').src)">
-      <span class="zoom-hint">Click to enlarge</span>
-      <img src="assets/lakes-constellation-hero.png" alt="All 14,154 Minnesota lakes rendered as points of light forming the shape of the state, no outline drawn" loading="lazy">
+  <!-- Stat callouts -->
+  <div class="stats-row rv">
+    <div class="stat-item">
+      <div class="stat-value">14,154</div>
+      <div class="stat-label">lakes, every one of them<br>from Minnesota DNR data</div>
     </div>
-
-    <div class="content-column">
-      <!-- Executive summary -->
-      <div class="exec-summary reveal">
-        <p>I needed an opener for a client summit: every lake in Minnesota as a point of light, no state outline drawn, the lakes alone forming the shape. I wrote what I wanted in plain English, handed it to Fable, Anthropic's newest Claude model, and watched. It pulled the state's official hydrography data, validated the lake counts against known ground truth, wrote the rendering code, caught its own mistakes, and produced a single file that runs anywhere with no internet connection. My job was art direction and judgment calls. The build was an early exploration of what hands-off looks like when the model is good enough to be handed the whole problem.</p>
-      </div>
+    <div class="stat-item">
+      <div class="stat-value">One File</div>
+      <div class="stat-label">self-contained, offline,<br>1.6 MB</div>
     </div>
-
-    <!-- Stat callouts -->
-    <div class="stats-row reveal">
-      <div class="stat-card">
-        <div class="stat-value">14,154</div>
-        <div class="stat-label">lakes, every one of them<br>from Minnesota DNR data</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">One File</div>
-        <div class="stat-label">self-contained, offline,<br>1.6 MB</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">Zero Code</div>
-        <div class="stat-label">written by me. I made<br>taste calls, not commits</div>
-      </div>
+    <div class="stat-item">
+      <div class="stat-value">Zero Code</div>
+      <div class="stat-label">written by me. I made<br>taste calls, not commits</div>
     </div>
+  </div>
 
+  <div class="content-col">
     <!-- Open the constellation -->
-    <div class="cta-section reveal" style="margin-top: 3rem;">
+    <div class="cta-panel rv">
       <h3>It is better experienced than described.</h3>
       <p>The bloom takes ten seconds. Then find your lake.</p>
-      <a href="../lakes/" class="cta-btn">Open the Constellation <span>&rarr;</span></a>
+      <div class="cta-actions">
+        <a href="../lakes/" class="btn">Open the Constellation <span>&rarr;</span></a>
+      </div>
     </div>
   </div>
 
-  <!-- ========== DIVIDER ========== -->
-  <div class="section-divider">
-    <span>Keep reading &darr;</span>
-  </div>
+</div>
 
-  <!-- ========== PRACTITIONER LAYER ========== -->
-  <div class="entry-container" style="padding-top: 0;">
-    <div class="narrative">
+<!-- ========== DIVIDER ========== -->
+<div class="divider">
+  <span>Keep reading &darr;</span>
+</div>
 
-      <!-- THE ASK -->
-      <div class="narrative-section reveal">
-        <div class="section-label">The Ask</div>
-        <p>The brief came out of a conversation, not a spec. A Minneapolis client&rsquo;s annual summit needed a thirty-second opener, and the idea was simple to say out loud: show every named lake in Minnesota as a star, let the density do the work, and let the audience realize they are looking at their own state about eight seconds in. I wrote that down in ordinary sentences, with the things I cared about (the timing of the recognition moment, the restraint, the accuracy) and the things I did not (the tech stack, the data wrangling, the math).</p>
+<!-- ========== PRACTITIONER LAYER ========== -->
+<div class="article-body narrative-body">
+  <div class="content-col narrative">
+
+    <!-- THE ASK -->
+    <div class="narrative-section rv">
+      <div class="sec-head"><span class="label">The Ask</span></div>
+      <p>The brief came out of a conversation, not a spec. A Minneapolis client&rsquo;s annual summit needed a thirty-second opener, and the idea was simple to say out loud: show every named lake in Minnesota as a star, let the density do the work, and let the audience realize they are looking at their own state about eight seconds in. I wrote that down in ordinary sentences, with the things I cared about (the timing of the recognition moment, the restraint, the accuracy) and the things I did not (the tech stack, the data wrangling, the math).</p>
+    </div>
+
+    <!-- THE HAND-OFF -->
+    <div class="narrative-section rv">
+      <div class="sec-head"><span class="label">The Hand-Off</span></div>
+      <p>Fable took the plan and ran. It found the Minnesota DNR&rsquo;s hydrography database on its own, downloaded it, and discovered the state&rsquo;s lake data is richer than the folklore: the famous 11,842 number dates to a 1968 survey, and the modern data delineates 14,154 basins of ten acres or more. It flagged that discrepancy to me instead of hiding it, validated seventeen famous lakes against ground truth before drawing anything, and counted the Mud Lakes (177, if you are wondering).</p>
+      <div class="pull-quote">
+        <p>"The interesting part was not that it wrote the code. It was that it checked its own work before I asked, and brought me decisions instead of problems."</p>
       </div>
+      <p>When something needed taste rather than computation, it stopped and asked. Should Lake Superior be included? (We cut it. The state outline is stronger without it, and it is not really about Superior.) Should unnamed lakes count? (Yes. Otter Tail County&rsquo;s bragging rights depend on them.) Those were my calls. Everything between them was not.</p>
+    </div>
 
-      <!-- THE HAND-OFF -->
-      <div class="narrative-section reveal">
-        <div class="section-label">The Hand-Off</div>
-        <p>Fable took the plan and ran. It found the Minnesota DNR&rsquo;s hydrography database on its own, downloaded it, and discovered the state&rsquo;s lake data is richer than the folklore: the famous 11,842 number dates to a 1968 survey, and the modern data delineates 14,154 basins of ten acres or more. It flagged that discrepancy to me instead of hiding it, validated seventeen famous lakes against ground truth before drawing anything, and counted the Mud Lakes (177, if you are wondering).</p>
-        <div class="pull-quote">
-          <p>"The interesting part was not that it wrote the code. It was that it checked its own work before I asked, and brought me decisions instead of problems."</p>
-        </div>
-        <p>When something needed taste rather than computation, it stopped and asked. Should Lake Superior be included? (We cut it. The state outline is stronger without it, and it is not really about Superior.) Should unnamed lakes count? (Yes. Otter Tail County&rsquo;s bragging rights depend on them.) Those were my calls. Everything between them was not.</p>
+    <!-- WHAT CAME BACK -->
+    <div class="narrative-section rv">
+      <div class="sec-head"><span class="label">What Came Back</span></div>
+      <p>A single HTML file. No installation, no internet required, no dependencies. It opens to a dark field, and on a keypress the lakes bloom in over ten seconds until the state assembles itself out of light. Behind the show mode there is an exploration mode: search any of 8,584 named lakes and the panel draws that lake&rsquo;s actual shoreline, with its acreage, depth, and one true superlative it earned from the data. Toggle all 177 Mud Lakes at once. Light up the lakes carrying Ojibwe and Dakota names. For lakes in the ten counties that publish sale records, the panel even shows recent shoreline sales, sourced from public county assessor data after Fable talked me out of scraping Zillow on legal grounds.</p>
+    </div>
+
+    <!-- THE CHECKING -->
+    <div class="narrative-section rv">
+      <div class="sec-head"><span class="label">The Checking</span></div>
+      <p>The part I trust most is the part that came last. Before calling it done, Fable wrote an independent verification script that re-derived everything from the raw government sources and compared it against what the artifact actually displays: forty randomly sampled lakes checked field by field, shoreline shapes decoded and measured against the source polygons, sales re-derived from the parcel records. Sixty-one of sixty-two checks passed. The one failure was the checker&rsquo;s own assumption, not the data: it flagged three lakes as impossibly deep, then discovered they are Cuyuna Range mine pits, which really are deeper than any natural lake in the state.</p>
+      <div class="pull-quote">
+        <p>"Hands-off does not mean unverified. It means the verification is part of the hand-off."</p>
       </div>
+    </div>
 
-      <!-- WHAT CAME BACK -->
-      <div class="narrative-section reveal">
-        <div class="section-label">What Came Back</div>
-        <p>A single HTML file. No installation, no internet required, no dependencies. It opens to a dark field, and on a keypress the lakes bloom in over ten seconds until the state assembles itself out of light. Behind the show mode there is an exploration mode: search any of 8,584 named lakes and the panel draws that lake&rsquo;s actual shoreline, with its acreage, depth, and one true superlative it earned from the data. Toggle all 177 Mud Lakes at once. Light up the lakes carrying Ojibwe and Dakota names. For lakes in the ten counties that publish sale records, the panel even shows recent shoreline sales, sourced from public county assessor data after Fable talked me out of scraping Zillow on legal grounds.</p>
-      </div>
-
-      <!-- THE CHECKING -->
-      <div class="narrative-section reveal">
-        <div class="section-label">The Checking</div>
-        <p>The part I trust most is the part that came last. Before calling it done, Fable wrote an independent verification script that re-derived everything from the raw government sources and compared it against what the artifact actually displays: forty randomly sampled lakes checked field by field, shoreline shapes decoded and measured against the source polygons, sales re-derived from the parcel records. Sixty-one of sixty-two checks passed. The one failure was the checker&rsquo;s own assumption, not the data: it flagged three lakes as impossibly deep, then discovered they are Cuyuna Range mine pits, which really are deeper than any natural lake in the state.</p>
-        <div class="pull-quote">
-          <p>"Hands-off does not mean unverified. It means the verification is part of the hand-off."</p>
-        </div>
-      </div>
-
-      <!-- WHAT IT MEANS -->
-      <div class="narrative-section reveal">
-        <div class="section-label">What This Was Really About</div>
-        <p>This was an early exploration with a new model, and the finding is not about lakes. A working visualization of state-scale public data, validated, documented, and rehearsal-ready, used to be a small consulting engagement with a GIS specialist on the team. It is now an afternoon of describing what you want clearly and making good decisions when asked. The skill that mattered was knowing what to ask for and what good looks like. That is the shift I keep showing clients, and this time I have something they can touch.</p>
-      </div>
-
-    </div><!-- /narrative -->
+    <!-- WHAT IT MEANS -->
+    <div class="narrative-section rv">
+      <div class="sec-head"><span class="label">What This Was Really About</span></div>
+      <p>This was an early exploration with a new model, and the finding is not about lakes. A working visualization of state-scale public data, validated, documented, and rehearsal-ready, used to be a small consulting engagement with a GIS specialist on the team. It is now an afternoon of describing what you want clearly and making good decisions when asked. The skill that mattered was knowing what to ask for and what good looks like. That is the shift I keep showing clients, and this time I have something they can touch.</p>
+    </div>
 
     <!-- ========== CTA ========== -->
-    <div class="cta-section reveal">
+    <div class="cta-panel final rv">
       <h3>Go find your lake.</h3>
       <p>Then imagine what a plain-English plan could build for your business.</p>
-      <a href="../lakes/" class="cta-btn" style="margin-right: 0.75rem;">Open the Constellation <span>&rarr;</span></a>
-      <a href="mailto:contact@paramis.ai" class="cta-btn contact-btn">Get in Touch <span>&rarr;</span></a>
-    </div>
-
-  </div><!-- /entry-container -->
-
-  <!-- ========== FOOTER ========== -->
-  <div class="footer">
-    <p>&copy; 2026 <a href="../index.html">Paramis</a> &middot; <a href="mailto:woody@paramis.ai">woody@paramis.ai</a></p>
-  </div>
-
-  <!-- ========== SCRIPTS ========== -->
-  <script>
-    // Scroll progress bar
-    const scrollProgress = document.querySelector('.scroll-progress');
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      scrollProgress.style.transform = `scaleX(${scrollTop / docHeight})`;
-    });
-
-    // Nav scroll behavior
-    const nav = document.querySelector('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 50);
-    });
-
-    // Mobile menu
-    const mobileBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-    mobileBtn.addEventListener('click', () => {
-      mobileBtn.classList.toggle('active');
-      navLinks.classList.toggle('active');
-    });
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileBtn.classList.remove('active');
-        navLinks.classList.remove('active');
-      });
-    });
-
-    // Cursor glow
-    const cursorGlow = document.querySelector('.cursor-glow');
-    document.addEventListener('mousemove', e => {
-      cursorGlow.style.left = e.clientX + 'px';
-      cursorGlow.style.top = e.clientY + 'px';
-    });
-
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => revealObserver.observe(el));
-
-    // Lightbox
-    function openLightbox(src) {
-      const overlay = document.getElementById('lightbox');
-      const img = document.getElementById('lightbox-img');
-      img.src = src;
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    document.getElementById('lightbox').addEventListener('click', function(e) {
-      if (e.target === this || e.target.classList.contains('lightbox-close')) {
-        this.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        document.getElementById('lightbox').classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    });
-  </script>
-
-  <!-- Contact Popup -->
-  <div class="contact-overlay" id="contactOverlay">
-    <div class="contact-popup" style="position:relative;">
-      <button class="popup-close" id="popupClose">
-        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-      <h3>Get in Touch</h3>
-      <p class="popup-subtitle">Reach out to start a conversation</p>
-      <div class="email-display">contact@paramis.ai</div>
-      <div class="popup-actions">
-        <a href="mailto:contact@paramis.ai?subject=Website%20Inquiry" class="popup-btn popup-btn-primary">
-          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6 L12 13 L22 6"/></svg>
-          Open Email Client
-        </a>
-        <button class="popup-btn" id="copyEmailBtn">
-          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          Copy Email Address
-        </button>
+      <div class="cta-actions">
+        <a href="../lakes/" class="btn">Open the Constellation <span>&rarr;</span></a>
+        <a href="mailto:contact@paramis.ai" class="btn ghost contact-btn">Get in Touch <span>&rarr;</span></a>
       </div>
-      <div class="copied-toast" id="copiedToast">Copied to clipboard!</div>
     </div>
+
   </div>
+</div>
 
-  <script>
-    // Contact Popup
-    const contactOverlay = document.getElementById('contactOverlay');
-    const popupClose = document.getElementById('popupClose');
-    const copyEmailBtn = document.getElementById('copyEmailBtn');
-    const copiedToast = document.getElementById('copiedToast');
+<!-- ========== FOOTER ========== -->
+<footer>
+  <span class="mark">
+    <img src="../peregrine-logo.png" alt="" width="24" height="24">
+    Paramis
+  </span>
+  <span class="fine">&copy; 2026 <a href="../index.html">Paramis</a> &middot; <a href="mailto:woody@paramis.ai">woody@paramis.ai</a></span>
+</footer>
 
-    function openContactPopup() {
-      contactOverlay.classList.add('open');
+<!-- Contact popup -->
+<div class="contact-overlay" id="contactOverlay">
+  <div class="contact-popup" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
+    <button class="popup-close" id="popupClose" aria-label="Close">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <h3 id="popupTitle">Get in Touch</h3>
+    <p class="popup-subtitle">Reach out to start a conversation</p>
+    <div class="email-display">contact@paramis.ai</div>
+    <div class="popup-actions">
+      <a href="mailto:contact@paramis.ai?subject=Website%20Inquiry" class="popup-btn primary">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6 L12 13 L22 6"/></svg>
+        Open Email Client
+      </a>
+      <button class="popup-btn secondary" id="copyEmailBtn">
+        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy Email Address
+      </button>
+    </div>
+    <div class="copied-toast" id="copiedToast">Copied to clipboard!</div>
+  </div>
+</div>
+
+<script>
+  // Scroll progress bar
+  var scrollProgress = document.querySelector('.scroll-progress');
+  window.addEventListener('scroll', function () {
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    scrollProgress.style.transform = 'scaleX(' + (docHeight > 0 ? window.scrollY / docHeight : 0) + ')';
+  }, { passive: true });
+
+  // Nav background on scroll
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // Mobile menu
+  var menuBtn = document.getElementById('menuBtn');
+  var navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', function () {
+    var open = navLinks.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Scroll reveals
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.rv').forEach(function (el) { io.observe(el); });
+
+  // Lightbox
+  function openLightbox(src) {
+    var overlay = document.getElementById('lightbox');
+    var img = document.getElementById('lightbox-img');
+    img.src = src;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  document.getElementById('lightbox').addEventListener('click', function (e) {
+    if (e.target === this || e.target.classList.contains('lightbox-close')) {
+      this.classList.remove('active');
+      document.body.style.overflow = '';
     }
-    function closeContactPopup() {
-      contactOverlay.classList.remove('open');
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
     }
+  });
 
-    document.querySelector('.contact-btn').addEventListener('click', (e) => {
+  // Contact popup
+  var overlay = document.getElementById('contactOverlay');
+  var popupClose = document.getElementById('popupClose');
+  var copyBtn = document.getElementById('copyEmailBtn');
+  var toast = document.getElementById('copiedToast');
+  var lastFocus = null;
+
+  function openPopup() {
+    lastFocus = document.activeElement;
+    overlay.classList.add('open');
+    popupClose.focus();
+  }
+  function closePopup() {
+    overlay.classList.remove('open');
+    toast.classList.remove('show');
+    if (lastFocus) lastFocus.focus();
+  }
+  document.querySelectorAll('.contact-btn').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
       e.preventDefault();
-      openContactPopup();
+      openPopup();
     });
-
-    popupClose.addEventListener('click', closeContactPopup);
-    contactOverlay.addEventListener('click', (e) => {
-      if (e.target === contactOverlay) closeContactPopup();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeContactPopup();
-    });
-
-    function fallbackCopyEmail(email) {
-      const textarea = document.createElement('textarea');
-      textarea.value = email;
-      textarea.setAttribute('readonly', '');
-      textarea.style.position = 'fixed';
-      textarea.style.top = '-9999px';
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      textarea.remove();
+  });
+  popupClose.addEventListener('click', closePopup);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closePopup();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closePopup();
+  });
+  copyBtn.addEventListener('click', function () {
+    var email = 'contact@paramis.ai';
+    var settled = false;
+    function done() {
+      if (settled) return;
+      settled = true;
+      toast.classList.add('show');
+      setTimeout(function () { toast.classList.remove('show'); }, 2200);
     }
-
-    function showCopiedToast() {
-      copiedToast.classList.add('show');
-      setTimeout(() => copiedToast.classList.remove('show'), 2000);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email).then(done, function () {
+        if (fallbackCopy(email)) done();
+      });
+      // some embedded browsers never settle the clipboard promise
+      setTimeout(function () {
+        if (!settled && fallbackCopy(email)) done();
+      }, 350);
+    } else if (fallbackCopy(email)) {
+      done();
     }
-
-    copyEmailBtn.addEventListener('click', async () => {
-      const email = 'contact@paramis.ai';
-      try {
-        if (!navigator.clipboard) throw new Error('Clipboard API unavailable');
-        await navigator.clipboard.writeText(email);
-      } catch (error) {
-        fallbackCopyEmail(email);
-      }
-      showCopiedToast();
-    });
-  </script>
-
+  });
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+</script>
 </body>
 </html>

@@ -7,629 +7,322 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
   <style>
+    /* ============================================================
+       PARAMIS CLIENT PORTAL: "Stoop" design system v1
+       ============================================================ */
     :root {
-      --primary: #4A90A4;
-      --primary-light: #7CB9E8;
-      --primary-dark: #2C5F72;
-      --accent: #F5A623;
-      --dark: #0a0a0a;
-      --dark-elevated: #111111;
-      --light: #ffffff;
-      --gray: #a0a0a0;
-      --gray-dim: #666;
-      --glass: rgba(255, 255, 255, 0.03);
-      --glass-border: rgba(255, 255, 255, 0.08);
-      --glow-primary: rgba(74, 144, 164, 0.4);
-      --glow-accent: rgba(245, 166, 35, 0.3);
-      --text-xs: 0.75rem;
-      --text-sm: 0.875rem;
-      --text-base: 1rem;
-      --text-lg: 1.125rem;
-      --text-xl: 1.5rem;
+      --ink: #0E0E0F;
+      --ink-2: #141416;
+      --bone: #ECE8E0;
+      --bone-dim: #8E897D;
+      --gold: #F5A623;
+      --steel: #1C242B;
+      --hair: rgba(236, 232, 224, 0.14);
+      --pad: clamp(1.25rem, 5vw, 5rem);
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-
     body {
-      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--dark);
-      color: var(--light);
+      font-family: 'Archivo', sans-serif;
+      font-stretch: 100%;
+      background: var(--ink);
+      color: var(--bone);
       line-height: 1.6;
       overflow-x: hidden;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      min-height: 100svh;
+      display: flex; flex-direction: column;
     }
+    ::selection { background: var(--gold); color: var(--ink); }
 
-    /* Noise texture */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      opacity: 0.015;
-      z-index: 10000;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    }
-
-    /* Ambient background glow */
+    /* the one diagonal: a steel wedge along the bottom of the viewport */
     body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 20% 80%, rgba(74, 144, 164, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(245, 166, 35, 0.06) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(74, 144, 164, 0.05) 0%, transparent 70%);
-      animation: gradientPulse 8s ease-in-out infinite;
-      pointer-events: none;
-      z-index: -1;
-    }
-    @keyframes gradientPulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
+      content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: var(--steel);
+      clip-path: polygon(0 calc(100% - 14vw), 100% calc(100% - 6vw), 100% 100%, 0 100%);
     }
 
-    /* Cursor glow */
-    .cursor-glow {
-      position: fixed;
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(74, 144, 164, 0.12) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: opacity 0.3s ease;
+    .portal-subtitle, .form-group input, .portal-links a, .access-message p, footer .fine {
+      font-family: 'Bricolage Grotesque', sans-serif;
     }
 
-    /* Particle canvas */
-    #portal-canvas {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.4;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* Navigation */
+    /* ---------- nav ---------- */
     nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 1rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      background: rgba(10, 10, 10, 0.7);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--glass-border);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+      padding: 1.1rem var(--pad);
+      background: var(--ink);
+      border-bottom: 1px solid var(--hair);
     }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      color: var(--light);
-      font-weight: 600;
-      font-size: 1.35rem;
-      letter-spacing: -0.5px;
+    .brand {
+      display: flex; align-items: center; gap: 0.7rem;
+      text-decoration: none; color: var(--bone);
+      font-stretch: 120%; font-weight: 800; letter-spacing: 0.22em;
+      font-size: 1rem; text-transform: uppercase;
     }
-    .logo img {
-      height: 36px;
-      transition: transform 0.3s ease;
-    }
-    .logo:hover img {
-      transform: rotate(-5deg) scale(1.05);
-    }
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
+    .brand img { width: 27px; height: 27px; }
+    .nav-links { display: flex; align-items: center; gap: 2.2rem; list-style: none; }
     .nav-links a {
-      color: var(--gray);
-      text-decoration: none;
-      font-size: var(--text-sm);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      position: relative;
-      padding-bottom: 4px;
-      transition: color 0.3s;
+      color: var(--bone-dim); text-decoration: none; white-space: nowrap;
+      font-stretch: 115%; font-weight: 600; font-size: 0.68rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      transition: color 0.25s ease;
     }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 0; height: 1px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--gold); }
+    .nav-links a.portal {
+      border: 1px solid var(--gold); padding: 0.55em 1.1em; color: var(--gold);
     }
-    .nav-links a:hover { color: var(--light); }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-links a.active { color: var(--accent); }
-    .nav-links a.active::after { width: 100%; }
+    @media (max-width: 1360px) {
+      .nav-links { gap: 1.3rem; }
+      .nav-links a { font-size: 0.62rem; letter-spacing: 0.15em; }
+    }
+    .menu-btn {
+      display: none; background: none; border: 0; cursor: pointer;
+      flex-direction: column; gap: 6px; padding: 8px; z-index: 102;
+    }
+    .menu-btn span { width: 26px; height: 2px; background: var(--bone); transition: transform 0.3s ease, opacity 0.3s ease; }
+    .menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-    /* Mobile hamburger */
-    .mobile-menu-btn {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 10px;
-      z-index: 10001;
-    }
-    .mobile-menu-btn span {
-      width: 24px; height: 2px;
-      background: var(--light);
-      transition: all 0.3s ease;
-    }
-    .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-    .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
-    .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
-    /* Portal content */
+    /* ---------- portal card ---------- */
     .portal-wrapper {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 2;
-      padding: 6rem 1.5rem 2rem;
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 2;
+      padding: 7rem 1.5rem 3rem;
     }
-
     .portal-card {
-      width: 100%;
-      max-width: 420px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 4px;
-      padding: 3rem 2.5rem;
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: portalFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+      width: 100%; max-width: 430px;
+      background: var(--ink-2);
+      border: 1px solid var(--hair);
+      border-top: 2px solid var(--gold);
+      padding: 3rem 2.5rem 2.6rem;
+      opacity: 0; transform: translateY(24px);
+      animation: cardIn 0.7s cubic-bezier(0.2, 0.9, 0.2, 1) 0.15s forwards;
     }
-    .portal-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
+    @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) {
+      .portal-card { animation: none; opacity: 1; transform: none; }
     }
-    @keyframes portalFadeIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .portal-logo {
-      width: 80px;
-      display: block;
-      margin: 0 auto 1.5rem;
-      filter: drop-shadow(0 0 30px var(--glow-primary));
-      animation: portalFloat 6s ease-in-out infinite;
-    }
-    @keyframes portalFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
+    .portal-mark { width: 64px; height: 64px; display: block; margin: 0 auto 1.2rem; }
     .portal-heading {
       text-align: center;
-      font-size: var(--text-xl);
-      font-weight: 600;
-      letter-spacing: -0.5px;
+      font-stretch: 115%; font-weight: 800; text-transform: uppercase;
+      font-size: 1.05rem; letter-spacing: 0.24em;
       margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, var(--light) 0%, var(--primary-light) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
+    .portal-subtitle { text-align: center; color: var(--bone-dim); font-size: 0.9rem; margin-bottom: 2.2rem; }
 
-    .portal-subtitle {
-      text-align: center;
-      color: var(--gray-dim);
-      font-size: var(--text-sm);
-      margin-bottom: 2rem;
-    }
-
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
+    .form-group { margin-bottom: 1.25rem; }
     .form-group label {
       display: block;
-      font-size: var(--text-xs);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--gray);
-      margin-bottom: 0.5rem;
+      font-stretch: 115%; font-weight: 600; font-size: 0.62rem;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--bone-dim); margin-bottom: 0.55rem;
     }
     .form-group input {
       width: 100%;
-      padding: 0.85rem 1rem;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--glass-border);
-      border-radius: 2px;
-      color: var(--light);
-      font-family: 'DM Sans', sans-serif;
-      font-size: var(--text-base);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      padding: 0.9rem 1rem;
+      background: rgba(236, 232, 224, 0.04);
+      border: 1px solid var(--hair);
+      color: var(--bone);
+      font-size: 0.98rem;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
       outline: none;
     }
-    .form-group input::placeholder {
-      color: var(--gray-dim);
-    }
+    .form-group input::placeholder { color: var(--bone-dim); opacity: 0.7; }
     .form-group input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.15);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.16);
     }
 
     .sign-in-btn {
       width: 100%;
-      padding: 1rem;
-      background: transparent;
-      border: 1px solid var(--primary);
-      color: var(--light);
-      font-family: 'DM Sans', sans-serif;
-      font-size: var(--text-sm);
-      font-weight: 500;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 1.05rem;
+      background: var(--gold); color: var(--ink);
+      border: 0; cursor: pointer;
+      font-family: 'Archivo', sans-serif;
+      font-stretch: 115%; font-weight: 800; font-size: 0.72rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
       margin-top: 0.5rem;
+      transition: background 0.25s ease;
     }
-    .sign-in-btn::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(74, 144, 164, 0.3), transparent);
-      transition: left 0.5s ease;
-    }
-    .sign-in-btn:hover {
-      background: var(--primary);
-      border-color: var(--primary);
-      box-shadow: 0 0 40px var(--glow-primary);
-      letter-spacing: 2.5px;
-    }
-    .sign-in-btn:hover::before { left: 100%; }
-    .sign-in-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+    .sign-in-btn:hover, .sign-in-btn:focus-visible { background: var(--bone); }
+    .sign-in-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-    .portal-links {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1.5rem;
-    }
+    .portal-links { display: flex; justify-content: space-between; margin-top: 1.5rem; }
     .portal-links a {
-      color: var(--gray-dim);
-      text-decoration: none;
-      font-size: var(--text-xs);
-      letter-spacing: 0.5px;
-      transition: color 0.3s;
+      color: var(--bone-dim); text-decoration: none; font-size: 0.8rem;
+      transition: color 0.25s ease;
     }
-    .portal-links a:hover {
-      color: var(--primary-light);
-    }
+    .portal-links a:hover, .portal-links a:focus-visible { color: var(--gold); }
 
-    /* Access message (shown after "sign in") */
-    .access-message {
-      text-align: center;
-      display: none;
-    }
+    /* access message */
+    .access-message { text-align: center; display: none; }
     .access-message.visible {
       display: block;
-      animation: portalFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: cardIn 0.5s cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+    }
+    .lock-icon {
+      width: 44px; height: 44px; margin: 0 auto 1.1rem;
+      stroke: var(--gold); stroke-width: 1.5; fill: none; opacity: 0.85;
+      display: block;
     }
     .access-message h3 {
-      font-size: var(--text-lg);
-      font-weight: 600;
+      font-stretch: 115%; font-weight: 800; text-transform: uppercase;
+      font-size: 0.95rem; letter-spacing: 0.2em;
       margin-bottom: 1rem;
-      color: var(--light);
     }
-    .access-message p {
-      color: var(--gray);
-      font-size: var(--text-sm);
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
-    }
+    .access-message p { color: var(--bone-dim); font-size: 0.92rem; line-height: 1.7; margin-bottom: 1.6rem; }
     .access-message .request-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.85rem 2rem;
-      background: transparent;
-      border: 1px solid var(--accent);
-      color: var(--accent);
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.9em 1.9em;
+      border: 1px solid var(--gold); color: var(--gold);
       text-decoration: none;
-      font-size: var(--text-sm);
-      font-weight: 500;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      font-stretch: 115%; font-weight: 700; font-size: 0.66rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      transition: background 0.25s ease, color 0.25s ease;
     }
-    .access-message .request-btn:hover {
-      background: var(--accent);
-      color: var(--dark);
-      box-shadow: 0 0 40px var(--glow-accent);
+    .access-message .request-btn:hover, .access-message .request-btn:focus-visible {
+      background: var(--gold); color: var(--ink);
     }
 
-    /* Lock icon */
-    .lock-icon {
-      width: 48px;
-      height: 48px;
-      margin: 0 auto 1rem;
-      stroke: var(--primary);
-      stroke-width: 1.5;
-      fill: none;
-      opacity: 0.6;
-    }
-
-    /* Footer */
+    /* ---------- footer ---------- */
     footer {
-      padding: 2rem 5%;
-      border-top: 1px solid var(--glass-border);
-      text-align: center;
-      font-size: var(--text-sm);
-      color: var(--gray-dim);
-      letter-spacing: 0.5px;
-      position: relative;
-      z-index: 2;
+      position: relative; z-index: 2;
+      padding: 2rem var(--pad);
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      color: var(--bone-dim); font-size: 0.78rem; letter-spacing: 0.06em;
     }
+    footer .mark { display: flex; align-items: center; gap: 0.6rem; font-stretch: 118%; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; font-size: 0.65rem; color: var(--bone); }
+    footer .mark img { width: 22px; height: 22px; }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .mobile-menu-btn { display: flex; }
+    /* ---------- responsive ---------- */
+    @media (max-width: 1024px) {
+      .menu-btn { display: flex; }
       .nav-links {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        background: rgba(10, 10, 10, 0.98);
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 3rem;
-        opacity: 0; visibility: hidden;
-        transition: all 0.4s ease;
-        z-index: 10000;
+        position: fixed; inset: 0; background: var(--ink);
+        flex-direction: column; justify-content: center; gap: 2.4rem;
+        opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
       }
-      .nav-links.active { opacity: 1; visibility: visible; }
-      .nav-links a { font-size: 1.2rem; }
-      nav:has(.nav-links.active) {
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        background: transparent;
-        border-bottom: none;
-      }
-      .portal-card { padding: 2rem 1.5rem; }
-      .cursor-glow { display: none; }
+      .nav-links.open { opacity: 1; visibility: visible; }
+      .nav-links a { font-size: 1.05rem; }
+    }
+    @media (max-width: 768px) {
+      .portal-card { padding: 2.2rem 1.6rem; }
+      footer { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <!-- Cursor glow -->
-  <div class="cursor-glow"></div>
 
-  <!-- Particle background -->
-  <canvas id="portal-canvas"></canvas>
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="brand" aria-label="Paramis home">
+    <img src="peregrine-logo.png" alt="" width="27" height="27">
+    Paramis
+  </a>
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="field-notes.html">Field Notes</a></li>
+    <li><a href="safety-guide/">Safety</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="portal.html" class="portal">Client Portal</a></li>
+  </ul>
+</nav>
 
-  <!-- NAV -->
-  <nav>
-    <a href="index.html" class="logo">
-      <img src="peregrine-logo.png" alt="Paramis">
-      <span>Paramis</span>
-    </a>
-    <div class="mobile-menu-btn">
-      <span></span><span></span><span></span>
+<!-- PORTAL -->
+<div class="portal-wrapper">
+  <div class="portal-card">
+    <img class="portal-mark" src="peregrine-logo.png" alt="">
+
+    <!-- Login form -->
+    <div id="login-form">
+      <h2 class="portal-heading">Client Portal</h2>
+      <p class="portal-subtitle">Secure access for active clients</p>
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter your username" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password">
+      </div>
+      <button class="sign-in-btn" id="sign-in-btn">Sign In</button>
+      <div class="portal-links">
+        <a href="#">Forgot password?</a>
+        <a href="index.html#contact">Request access</a>
+      </div>
     </div>
-    <ul class="nav-links">
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="index.html#about">About</a></li>
-      <li><a href="field-notes.html">Field Notes</a></li>
-      <li><a href="safety-guide/">Safety</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-      <li><a href="portal.html" class="active">Client Portal</a></li>
-    </ul>
-  </nav>
 
-  <!-- PORTAL CONTENT -->
-  <div class="portal-wrapper">
-    <div class="portal-card">
-      <img src="peregrine-logo.png" alt="Paramis" class="portal-logo">
-
-      <!-- Login form -->
-      <div id="login-form">
-        <h2 class="portal-heading">Client Portal</h2>
-        <p class="portal-subtitle">Secure access for active clients</p>
-
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" placeholder="Enter your username" autocomplete="off">
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter your password">
-        </div>
-        <button class="sign-in-btn" id="sign-in-btn">Sign In</button>
-        <div class="portal-links">
-          <a href="#">Forgot password?</a>
-          <a href="index.html#contact">Request access</a>
-        </div>
-      </div>
-
-      <!-- Access message (replaces form after sign in) -->
-      <div class="access-message" id="access-message">
-        <svg class="lock-icon" viewBox="0 0 24 24">
-          <rect x="3" y="11" width="18" height="11" rx="2"/>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-          <circle cx="12" cy="16" r="1"/>
-        </svg>
-        <h3>Access Restricted</h3>
-        <p>Portal access is provisioned for active clients. To request credentials, please contact us.</p>
-        <a href="index.html#contact" class="request-btn">Request Access <span>&rarr;</span></a>
-      </div>
+    <!-- Access message (replaces form after sign in) -->
+    <div class="access-message" id="access-message">
+      <svg class="lock-icon" viewBox="0 0 24 24">
+        <rect x="3" y="11" width="18" height="11" rx="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        <circle cx="12" cy="16" r="1"/>
+      </svg>
+      <h3>Access Restricted</h3>
+      <p>Portal access is provisioned for active clients. To request credentials, please contact us.</p>
+      <a href="index.html#contact" class="request-btn">Request Access <span>&rarr;</span></a>
     </div>
   </div>
+</div>
 
-  <footer>
-    <span>&copy; 2025 Paramis LLC. All rights reserved.</span>
-  </footer>
+<footer>
+  <span class="mark">
+    <img src="peregrine-logo.png" alt="" width="22" height="22">
+    Paramis
+  </span>
+  <span class="fine">&copy; 2026 Paramis LLC. All rights reserved.</span>
+</footer>
 
-  <script>
-    // Cursor glow
-    const cursorGlow = document.querySelector('.cursor-glow');
-    let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+<script>
+  // Mobile menu
+  var menuBtn = document.getElementById('menuBtn');
+  var navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', function () {
+    var open = navLinks.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
     });
+  });
 
-    function animateCursor() {
-      glowX += (mouseX - glowX) * 0.08;
-      glowY += (mouseY - glowY) * 0.08;
-      cursorGlow.style.left = glowX + 'px';
-      cursorGlow.style.top = glowY + 'px';
-      requestAnimationFrame(animateCursor);
-    }
-    if (!('ontouchstart' in window)) animateCursor();
-    else cursorGlow.style.display = 'none';
+  // Sign in behavior (no real auth: portal is provisioned per client)
+  var signInBtn = document.getElementById('sign-in-btn');
+  var loginForm = document.getElementById('login-form');
+  var accessMessage = document.getElementById('access-message');
 
-    // Mobile menu
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenuBtn.classList.toggle('active');
-      navLinks.classList.toggle('active');
+  signInBtn.addEventListener('click', function () {
+    signInBtn.textContent = 'Authenticating...';
+    signInBtn.disabled = true;
+
+    setTimeout(function () {
+      loginForm.style.transition = 'opacity 0.35s ease';
+      loginForm.style.opacity = '0';
+
+      setTimeout(function () {
+        loginForm.style.display = 'none';
+        accessMessage.classList.add('visible');
+      }, 350);
+    }, 1500);
+  });
+
+  // Allow Enter key to trigger sign in
+  document.querySelectorAll('#login-form input').forEach(function (input) {
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') signInBtn.click();
     });
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenuBtn.classList.remove('active');
-        navLinks.classList.remove('active');
-      });
-    });
-
-    // Sign in behavior
-    const signInBtn = document.getElementById('sign-in-btn');
-    const loginForm = document.getElementById('login-form');
-    const accessMessage = document.getElementById('access-message');
-
-    signInBtn.addEventListener('click', () => {
-      signInBtn.textContent = 'Authenticating...';
-      signInBtn.disabled = true;
-
-      setTimeout(() => {
-        loginForm.style.transition = 'opacity 0.4s ease';
-        loginForm.style.opacity = '0';
-
-        setTimeout(() => {
-          loginForm.style.display = 'none';
-          accessMessage.classList.add('visible');
-        }, 400);
-      }, 1500);
-    });
-
-    // Allow Enter key to trigger sign in
-    document.querySelectorAll('#login-form input').forEach(input => {
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') signInBtn.click();
-      });
-    });
-
-    // Particle canvas
-    const canvas = document.getElementById('portal-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let animationId;
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    class Particle {
-      constructor() { this.reset(); }
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.5;
-        this.speedY = (Math.random() - 0.5) * 0.5;
-        this.opacity = Math.random() * 0.5 + 0.2;
-        this.color = Math.random() > 0.7 ? '#F5A623' : '#4A90A4';
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.globalAlpha = this.opacity;
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      }
-    }
-
-    function initParticles() {
-      particles = [];
-      const count = Math.min(80, Math.floor(canvas.width * canvas.height / 15000));
-      for (let i = 0; i < count; i++) particles.push(new Particle());
-    }
-
-    function connectParticles() {
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 150) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = '#4A90A4';
-            ctx.globalAlpha = 0.1 * (1 - dist / 150);
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-            ctx.globalAlpha = 1;
-          }
-        }
-      }
-    }
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => { p.update(); p.draw(); });
-      connectParticles();
-      animationId = requestAnimationFrame(animateParticles);
-    }
-
-    resizeCanvas();
-    initParticles();
-    animateParticles();
-
-    window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) cancelAnimationFrame(animationId);
-      else animateParticles();
-    });
-  </script>
+  });
+</script>
 </body>
 </html>

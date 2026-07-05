@@ -8,123 +8,100 @@
   <meta name="description" content="That page could not be found. Find your way back to Paramis AI.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
   <style>
+    /* ============================================================
+       PARAMIS 404: "Stoop" design system v1
+       ============================================================ */
     :root {
-      --primary: #4A90A4;
-      --primary-light: #7CB9E8;
-      --accent: #F5A623;
-      --dark: #0a0a0a;
-      --light: #ffffff;
-      --gray: #a0a0a0;
-      --glass: rgba(255, 255, 255, 0.03);
-      --glass-border: rgba(255, 255, 255, 0.08);
+      --ink: #0E0E0F;
+      --ink-2: #141416;
+      --bone: #ECE8E0;
+      --bone-dim: #8E897D;
+      --gold: #F5A623;
+      --steel: #1C242B;
+      --hair: rgba(236, 232, 224, 0.14);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
-      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--dark);
-      color: var(--light);
+      font-family: 'Archivo', sans-serif;
+      font-stretch: 100%;
+      background: var(--ink);
+      color: var(--bone);
       line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-height: 100svh;
+      display: flex; align-items: center; justify-content: center;
       padding: 2rem 1.5rem;
-      overflow-x: hidden;
+      overflow: hidden;
       position: relative;
     }
-    /* Ambient glow */
+    ::selection { background: var(--gold); color: var(--ink); }
+
+    /* the falcon, missing its mark for once */
+    .bg-bird {
+      position: fixed; right: -6vw; top: -4vh;
+      width: clamp(280px, 34vw, 520px);
+      opacity: 0.16; z-index: 0; pointer-events: none;
+    }
+    /* the one diagonal */
     body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(600px circle at 20% 20%, rgba(74, 144, 164, 0.10), transparent 60%),
-        radial-gradient(500px circle at 80% 80%, rgba(245, 166, 35, 0.07), transparent 60%);
+      content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: var(--steel);
+      clip-path: polygon(0 calc(100% - 12vw), 100% calc(100% - 4vw), 100% 100%, 0 100%);
     }
-    .wrap {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      max-width: 640px;
-    }
-    .logo {
-      width: 64px;
-      height: 64px;
-      margin-bottom: 2rem;
-      opacity: 0.95;
-      filter: drop-shadow(0 0 24px rgba(74, 144, 164, 0.35));
-    }
+
+    .wrap { position: relative; z-index: 1; text-align: center; max-width: 680px; }
+    .mark { width: 56px; height: 56px; margin: 0 auto 1.4rem; display: block; }
     .code {
-      font-size: clamp(4.5rem, 18vw, 9rem);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      background: linear-gradient(90deg, var(--primary-light), var(--accent));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-stretch: 112%; font-weight: 900;
+      font-size: clamp(5rem, 20vw, 11rem);
+      letter-spacing: -0.02em; line-height: 0.95;
     }
+    .code .hollow { color: transparent; -webkit-text-stroke: 3px var(--gold); }
     h1 {
-      font-size: clamp(1.4rem, 4vw, 2rem);
-      font-weight: 600;
-      margin: 1rem 0 0.75rem;
-      letter-spacing: -0.01em;
+      font-stretch: 112%; font-weight: 800; text-transform: uppercase;
+      font-size: clamp(1.2rem, 3.6vw, 1.9rem);
+      letter-spacing: 0.01em;
+      margin: 1.2rem 0 0.8rem;
     }
     p.lead {
-      color: var(--gray);
-      font-size: 1.05rem;
-      max-width: 460px;
-      margin: 0 auto 2.5rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      color: var(--bone-dim);
+      font-size: 1.02rem;
+      max-width: 44ch;
+      margin: 0 auto 2.6rem;
     }
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      justify-content: center;
-    }
+    .links { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
     .links a {
       display: inline-block;
-      padding: 0.7rem 1.4rem;
-      border-radius: 999px;
+      padding: 0.95em 1.7em;
       text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      font-stretch: 115%; font-weight: 700; font-size: 0.66rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     }
-    .links a.primary {
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      color: #0a0a0a;
-      font-weight: 600;
-    }
-    .links a.ghost {
-      color: var(--light);
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-    }
-    .links a:hover { transform: translateY(-2px); }
-    .links a.ghost:hover { border-color: rgba(124, 185, 232, 0.5); }
+    .links a.primary { background: var(--gold); color: var(--ink); }
+    .links a.primary:hover, .links a.primary:focus-visible { background: var(--bone); }
+    .links a.ghost { color: var(--bone); border: 1px solid var(--hair); }
+    .links a.ghost:hover, .links a.ghost:focus-visible { border-color: var(--gold); color: var(--gold); }
     footer {
-      position: fixed;
-      bottom: 1.25rem;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      color: #666;
-      font-size: 0.8rem;
-      z-index: 1;
+      position: fixed; bottom: 1.4rem; left: 0; width: 100%;
+      text-align: center; z-index: 1;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      color: var(--bone-dim); font-size: 0.8rem;
     }
   </style>
 </head>
 <body>
+  <svg class="bg-bird" viewBox="0 0 200 300" overflow="visible" aria-hidden="true" fill="#F5A623">
+    <g transform="rotate(40 100 133)">
+      <path d="M 100 252 C 108 246, 112 232, 112 214 C 113 196, 114 180, 116 164 C 134 148, 158 120, 176 86 C 156 108, 134 124, 120 132 C 114 112, 112 86, 111 52 C 108 40, 104 28, 100 18 C 96 28, 92 40, 89 52 C 88 86, 86 112, 80 132 C 66 124, 44 108, 24 86 C 42 120, 66 148, 84 164 C 86 180, 87 196, 88 214 C 88 232, 92 246, 100 252 Z"/>
+    </g>
+  </svg>
+
   <div class="wrap">
-    <img src="/peregrine-logo.png" alt="Paramis" class="logo">
-    <div class="code">404</div>
+    <img class="mark" src="/peregrine-logo.png" alt="">
+    <div class="code">4<span class="hollow">0</span>4</div>
     <h1>This page isn't here.</h1>
     <p class="lead">The link may be old, or the page may have moved. Here's the way back.</p>
     <div class="links">
