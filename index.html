@@ -197,14 +197,6 @@
     .loaded .cta { transition: opacity 0.7s ease 0.65s, transform 0.7s ease 0.65s, background 0.25s ease, color 0.25s ease; opacity: 1; transform: none; }
     .cta:hover, .cta:focus-visible { background: var(--bone); }
 
-    .dive-bird {
-      position: absolute; z-index: 1;
-      right: 4vw; top: 6%;
-      width: clamp(260px, 29vw, 470px);
-      opacity: 0; transform: translate(60px, -40px) rotate(-6deg);
-      will-change: transform;
-    }
-    .loaded .dive-bird { transition: opacity 1s ease 0.35s, transform 1.1s cubic-bezier(0.2, 0.9, 0.2, 1) 0.35s; opacity: 1; transform: none; }
     .hero-foot {
       position: absolute; left: var(--pad); bottom: calc(var(--dive) + 1.5rem);
       display: flex; align-items: center; gap: 0.9rem;
@@ -401,7 +393,7 @@
     .rv.in { transition: opacity 0.55s cubic-bezier(0.2, 0.9, 0.2, 1), transform 0.55s cubic-bezier(0.2, 0.9, 0.2, 1); opacity: 1; transform: none; }
 
     @media (prefers-reduced-motion: reduce) {
-      h1 .line-in, .hero-sub, .cta, .dive-bird, .rv { transform: none !important; opacity: 1 !important; transition: none !important; }
+      h1 .line-in, .hero-sub, .cta, .rv { transform: none !important; opacity: 1 !important; transition: none !important; }
       .row-body { transition: none; }
     }
 
@@ -421,7 +413,6 @@
       }
       .nav-links.open { opacity: 1; visibility: visible; }
       .nav-links a { font-size: 1.05rem; }
-      .dive-bird { right: -90px; top: 4%; opacity: 0.5 !important; }
       h1 { position: relative; z-index: 2; }
     }
     @media (max-width: 768px) {
@@ -453,7 +444,6 @@
 
 <!-- HERO -->
 <header class="hero" id="top">
-  <img class="dive-bird" src="peregrine-logo.png" alt="">
   <span class="label">AI Strategy &middot; Training &middot; Governance</span>
   <h1 id="heroH1" aria-label="Focused on what will change.">
     <span class="line" aria-hidden="true"><span class="line-in">Focused on</span></span>
@@ -672,10 +662,9 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.rv').forEach(function (el) { io.observe(el); });
 
-  // Hero: width-axis compression + falcon drift on scroll
+  // Hero: width-axis compression on scroll
   if (!reduceMotion) {
     var h1 = document.getElementById('heroH1');
-    var birds = document.querySelectorAll('.dive-bird');
     var ticking = false;
     window.addEventListener('scroll', function () {
       if (ticking) return;
@@ -683,9 +672,6 @@
       requestAnimationFrame(function () {
         var y = Math.min(window.scrollY, 600);
         h1.style.fontStretch = (112 - (y / 600) * 12) + '%';
-        birds.forEach(function (b) {
-          b.style.transform = 'translate(' + (y * 0.14) + 'px,' + (y * -0.08) + 'px)';
-        });
         ticking = false;
       });
     }, { passive: true });
