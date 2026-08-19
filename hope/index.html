@@ -322,9 +322,10 @@
     .cover-wrap img {
       display: block;
       width: min(100%, 18rem);
+      height: auto;
       aspect-ratio: 1;
       border-radius: .8rem;
-      object-fit: cover;
+      object-fit: contain;
       box-shadow: 0 16px 28px rgba(18, 63, 82, .18);
       transition: transform .35s ease;
     }
@@ -576,9 +577,9 @@
       --bird-b: #42c5c7;
       position: absolute;
       z-index: 4;
-      width: clamp(2.7rem, 5vw, 4.1rem);
+      width: clamp(2.75rem, 4.2vw, 3.55rem);
       min-height: 0;
-      height: clamp(4.8rem, 9vw, 7rem);
+      height: clamp(4.4rem, 7.4vw, 6rem);
       padding: 0;
       border: 3px solid rgba(61,39,20,.62);
       border-radius: .25rem;
@@ -586,8 +587,10 @@
         linear-gradient(90deg, rgba(255,255,255,.13), transparent 35% 65%, rgba(45,25,10,.1)),
         var(--bird-b);
       box-shadow: 0 .55rem 1rem rgba(0,0,0,.28);
+      filter: saturate(.78) brightness(.82);
+      opacity: .68;
       transform: rotate(var(--tilt, -3deg));
-      transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+      transition: transform .2s ease, filter .2s ease, opacity .2s ease, box-shadow .2s ease;
     }
 
     .gooney:hover,
@@ -595,13 +598,16 @@
       z-index: 6;
       outline: 3px solid #fff5c7;
       outline-offset: 4px;
-      filter: brightness(1.1);
+      filter: brightness(1.08);
+      opacity: 1;
       transform: rotate(0) scale(1.1);
     }
 
     .gooney.found {
       z-index: 7;
       box-shadow: 0 0 0 .35rem #ffe8a8, 0 1rem 2rem rgba(0,0,0,.3);
+      filter: none;
+      opacity: 1;
       animation: bird-found .45s ease both;
     }
 
@@ -649,11 +655,10 @@
       clip-path: polygon(0 25%, 100% 0, 72% 100%, 27% 88%);
     }
 
-    .g1 { left: 11%; bottom: 22%; --tilt: -5deg; --bird-a:#f05e52; --bird-b:#43c1bb; }
-    .g2 { left: 31%; top: 19%; --tilt: 4deg; --bird-a:#e963a0; --bird-b:#f4c841; }
-    .g3 { left: 48%; bottom: 13%; --tilt: -2deg; --bird-a:#ee714c; --bird-b:#68bd68; }
-    .g4 { right: 9%; bottom: 15%; --tilt: 5deg; --bird-a:#f3b634; --bird-b:#6550a4; }
-    .g5 { left: 62%; top: 16%; --tilt: -4deg; --bird-a:#d34f44; --bird-b:#52b6d0; }
+    .g1 { left: 14%; bottom: 31%; --tilt: -5deg; --bird-a:#f05e52; --bird-b:#43c1bb; }
+    .g2 { left: 29%; top: 27%; --tilt: 4deg; --bird-a:#e963a0; --bird-b:#f4c841; }
+    .g3 { left: 48%; bottom: 9%; --tilt: -2deg; --bird-a:#ee714c; --bird-b:#68bd68; }
+    .g4 { right: 7%; bottom: 27%; --tilt: 5deg; --bird-a:#f3b634; --bird-b:#6550a4; }
 
     .hunt-story {
       display: grid;
@@ -921,9 +926,10 @@
       .hero-copy { padding: 4.5rem 1.4rem 2.2rem; }
       h1 { max-width: 9ch; }
       .hero-photo {
-        min-height: 54svh;
-        clip-path: ellipse(94% 80% at 62% 56%);
+        min-height: 0;
+        clip-path: none;
       }
+      .hero-photo img { display: block; height: auto; object-fit: contain; }
       .sun { top: auto; bottom: 43%; right: 5%; }
       .nav-links { display: none; }
       .book-grid { grid-template-columns: 1fr; }
@@ -931,7 +937,8 @@
       .gooney-heading { grid-template-columns: 1fr; }
       .gooney-heading p { max-width: 44rem; }
       .about { grid-template-columns: 1fr; }
-      .about-photo { min-height: 62svh; }
+      .about-photo { min-height: 0; }
+      .about-photo img { display: block; height: auto; object-fit: contain; }
       .about-copy { padding: 4rem 1.4rem; }
       .together-grid { grid-template-columns: 1fr; }
     }
@@ -945,11 +952,10 @@
       .hunt-bar { align-items: flex-start; }
       .hunt-story { grid-template-columns: 1fr; }
       .story-number { width: 2.6rem; }
-      .g1 { left: 10%; bottom: 24%; }
-      .g2 { left: 34%; top: 17%; }
-      .g3 { left: 47%; bottom: 12%; }
-      .g4 { right: 7%; bottom: 17%; }
-      .g5 { left: 57%; top: 31%; }
+      .g1 { left: 14%; bottom: 31%; }
+      .g2 { left: 30%; top: 29%; }
+      .g3 { left: 49%; bottom: 8%; }
+      .g4 { right: 7%; bottom: 27%; }
       .about-facts { grid-template-columns: 1fr; }
       .fact { min-height: 0; }
       footer { align-items: flex-start; flex-direction: column; }
@@ -1066,11 +1072,11 @@
 
       <div class="hunt-shell" data-reveal>
         <div class="hunt-bar">
-          <span class="hunt-count" id="gooney-count">0 of 5 Gooney Birds found</span>
+          <span class="hunt-count" id="gooney-count">0 of 4 Gooney Birds found</span>
           <button class="hunt-reset" id="gooney-reset" type="button">Hide them again</button>
         </div>
 
-        <div class="southport-scene" aria-label="A playful nighttime Southport waterfront with five hidden Gooney Birds">
+        <div class="southport-scene" aria-label="A playful nighttime Southport waterfront with four hidden Gooney Birds">
           <div class="moon" aria-hidden="true"></div>
           <div class="water" aria-hidden="true"></div>
           <div class="lighthouse" aria-hidden="true"></div>
@@ -1087,17 +1093,14 @@
           <button class="gooney g3" type="button" aria-label="Gooney Bird hiding near the bench" aria-pressed="false" data-title="No two birds are alike" data-fact="Each bird is hand-painted on a donated or recovered scrap of wood. Different feathers, different colors, different smile. Every Gooney Bird is one of a kind.">
             <span class="gooney-plume" aria-hidden="true"></span><span class="gooney-eyes" aria-hidden="true"></span><span class="gooney-beak" aria-hidden="true"></span>
           </button>
-          <button class="gooney g4" type="button" aria-label="Gooney Bird hiding by the shop" aria-pressed="false" data-title="They are gifts, never merchandise" data-fact="The birds appeared at homes, parks, shops, the waterfront, and even the police and fire stations. Finders could keep them. The artist insisted that every bird remain free.">
-            <span class="gooney-plume" aria-hidden="true"></span><span class="gooney-eyes" aria-hidden="true"></span><span class="gooney-beak" aria-hidden="true"></span>
-          </button>
-          <button class="gooney g5" type="button" aria-label="Gooney Bird hiding under the moon" aria-pressed="false" data-title="The cheer traveled farther" data-fact="By June 2024, more than 600 birds had appeared. Money offered for them went to animal rescue, community programs, and other local charities instead.">
+          <button class="gooney g4" type="button" aria-label="Gooney Bird hiding by the shop" aria-pressed="false" data-title="They are gifts, never merchandise" data-fact="The artist insisted that every bird remain free. By June 2024, more than 600 had appeared, and money offered for them was redirected to local charities.">
             <span class="gooney-plume" aria-hidden="true"></span><span class="gooney-eyes" aria-hidden="true"></span><span class="gooney-beak" aria-hidden="true"></span>
           </button>
         </div>
 
         <div class="hunt-story" id="gooney-story" aria-live="polite">
           <span class="story-number" id="gooney-number" aria-hidden="true">?</span>
-          <div><strong id="gooney-story-title">Five small surprises are hiding around town.</strong><span id="gooney-story-text">Tap each colorful bird to uncover a piece of the real Southport story.</span></div>
+          <div><strong id="gooney-story-title">Four small surprises are hiding around town.</strong><span id="gooney-story-text">Look closely, then tap each colorful bird to uncover a piece of the real Southport story.</span></div>
         </div>
         <div class="hunt-finale" id="gooney-finale" hidden aria-live="polite">
           <strong>You found the whole flock!</strong>
@@ -1288,8 +1291,8 @@
         });
         gooneyCount.textContent = '0 of ' + gooneyButtons.length + ' Gooney Birds found';
         gooneyNumber.textContent = '?';
-        gooneyTitle.textContent = 'Five small surprises are hiding around town.';
-        gooneyText.textContent = 'Tap each colorful bird to uncover a piece of the real Southport story.';
+        gooneyTitle.textContent = 'Four small surprises are hiding around town.';
+        gooneyText.textContent = 'Look closely, then tap each colorful bird to uncover a piece of the real Southport story.';
         gooneyFinale.hidden = true;
       });
     }());
