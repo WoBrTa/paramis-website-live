@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="description" content="A private preview for coastal children’s author Hope Taylor Spencer.">
+  <title>Hope Taylor Spencer | Coastal Children’s Author</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500&amp;display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js');</script>
+  <style>
+    :root {
+      --ocean: #087f91;
+      --deep: #123f52;
+      --sun: #f4b631;
+      --coral: #ef654f;
+      --sand: #f5e7ca;
+      --foam: #fffdf7;
+      --ink: #163a45;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--foam);
+      font-family: "DM Sans", system-ui, sans-serif;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+      background:
+        radial-gradient(circle at 18% 18%, rgba(244, 182, 49, .2), transparent 22rem),
+        linear-gradient(135deg, #fffdf7 0 52%, #e7f6f6 100%);
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      align-self: center;
+      padding: clamp(3rem, 7vw, 7rem);
+      padding-right: clamp(2rem, 4vw, 4rem);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      color: var(--ocean);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 2.4rem;
+      height: 3px;
+      border-radius: 99px;
+      background: var(--coral);
+    }
+
+    h1 {
+      margin: 1.25rem 0 1.1rem;
+      max-width: 11ch;
+      color: var(--deep);
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(4rem, 7vw, 7.7rem);
+      font-weight: 500;
+      letter-spacing: -.055em;
+      line-height: .86;
+    }
+
+    .motto {
+      margin: 0 0 1.6rem;
+      max-width: 25ch;
+      color: #8b4d33;
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(1.45rem, 2.2vw, 2rem);
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    .intro {
+      max-width: 35rem;
+      margin: 0 0 2.1rem;
+      font-size: clamp(1.02rem, 1.3vw, 1.18rem);
+      line-height: 1.65;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: .75rem;
+      min-height: 3.2rem;
+      padding: .85rem 1.25rem;
+      border-radius: 99px;
+      color: white;
+      background: var(--ocean);
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 12px 28px rgba(8, 127, 145, .22);
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .cta:hover, .cta:focus-visible {
+      transform: translateY(-2px);
+      background: var(--deep);
+    }
+
+    .hero-photo {
+      position: relative;
+      min-height: 100%;
+      clip-path: ellipse(82% 92% at 78% 50%);
+      background: var(--sand);
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 48% center;
+      filter: saturate(.96) contrast(1.02);
+    }
+
+    .sun {
+      position: absolute;
+      z-index: 3;
+      top: 7%;
+      right: 8%;
+      width: clamp(4.5rem, 8vw, 7rem);
+      aspect-ratio: 1;
+      border: 10px solid rgba(255, 253, 247, .85);
+      border-radius: 50%;
+      background: var(--sun);
+      box-shadow: 0 12px 45px rgba(244, 182, 49, .38);
+    }
+
+    .wave {
+      position: absolute;
+      z-index: 4;
+      left: -5%;
+      right: -5%;
+      bottom: -2.3rem;
+      height: 7rem;
+      border-radius: 50% 48% 0 0 / 55% 55% 0 0;
+      background: var(--ocean);
+      transform: rotate(-1deg);
+    }
+
+    .wave::before {
+      content: "";
+      position: absolute;
+      inset: -1rem 0 auto;
+      height: 2.2rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .78);
+    }
+
+    .preview-story {
+      min-height: 75vh;
+      display: grid;
+      place-items: center;
+      padding: 7rem 1.5rem;
+      background: var(--ocean);
+      color: white;
+      text-align: center;
+    }
+
+    .preview-story div { max-width: 48rem; }
+    .preview-story span {
+      color: var(--sand);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .preview-story h2 {
+      margin: 1rem 0;
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(3rem, 6vw, 6.2rem);
+      font-weight: 500;
+      line-height: .95;
+    }
+    .preview-story p {
+      margin: 0 auto;
+      max-width: 38rem;
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 20;
+      top: .75rem;
+      left: .75rem;
+      transform: translateY(-150%);
+      padding: .7rem 1rem;
+      border-radius: .5rem;
+      color: white;
+      background: var(--deep);
+    }
+
+    .skip-link:focus { transform: none; }
+
+    .mini-nav {
+      position: absolute;
+      z-index: 8;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.35rem clamp(1.4rem, 4vw, 4rem);
+    }
+
+    .wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: .65rem;
+      color: var(--deep);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .book-mark {
+      position: relative;
+      width: 2.2rem;
+      height: 1.5rem;
+      border: 2px solid var(--ocean);
+      border-radius: .65rem .65rem .15rem .15rem;
+      border-bottom-width: 4px;
+      background: linear-gradient(90deg, transparent 48%, var(--ocean) 49% 52%, transparent 53%);
+    }
+
+    .nav-links { display: flex; gap: 1.25rem; }
+    .nav-links a {
+      color: var(--deep);
+      font-size: .88rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .section-kicker {
+      display: block;
+      margin-bottom: .9rem;
+      color: #a74434;
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+    }
+
+    .books {
+      padding: clamp(5rem, 9vw, 9rem) clamp(1.2rem, 5vw, 5rem);
+      background:
+        radial-gradient(circle at 90% 7%, rgba(244, 182, 49, .22), transparent 20rem),
+        #fff9eb;
+    }
+
+    .section-heading {
+      max-width: 58rem;
+      margin: 0 auto 4rem;
+      text-align: center;
+    }
+
+    .section-heading h2,
+    .about h2,
+    .sand-memory h2 {
+      margin: 0;
+      color: var(--deep);
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(3rem, 5.4vw, 5.8rem);
+      font-weight: 500;
+      letter-spacing: -.04em;
+      line-height: .94;
+    }
+
+    .section-heading p {
+      max-width: 42rem;
+      margin: 1.35rem auto 0;
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(1.2rem, 3vw, 2.5rem);
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .book-card {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(150px, .72fr) minmax(0, 1fr);
+      min-height: 27rem;
+      border: 1px solid rgba(18, 63, 82, .1);
+      border-radius: 1.8rem;
+      background: rgba(255, 255, 255, .9);
+      box-shadow: 0 24px 50px rgba(18, 63, 82, .09);
+    }
+
+    .cover-wrap {
+      display: grid;
+      place-items: center;
+      padding: clamp(1rem, 2.2vw, 2rem);
+      background: var(--card-bg, #dff4f5);
+    }
+
+    .cover-wrap img {
+      display: block;
+      width: min(100%, 18rem);
+      aspect-ratio: 1;
+      border-radius: .8rem;
+      object-fit: cover;
+      box-shadow: 0 16px 28px rgba(18, 63, 82, .18);
+      transition: transform .35s ease;
+    }
+
+    .book-card:hover .cover-wrap img { transform: rotate(-1.5deg) scale(1.025); }
+
+    .book-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(1.6rem, 3vw, 2.8rem);
+    }
+
+    .book-number {
+      color: var(--ocean);
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .book-copy h3 {
+      margin: .65rem 0 .85rem;
+      color: var(--deep);
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(2rem, 3vw, 3.1rem);
+      font-weight: 500;
+      letter-spacing: -.035em;
+      line-height: .98;
+    }
+
+    .book-copy p {
+      margin: 0 0 1.3rem;
+      line-height: 1.62;
+    }
+
+    .book-link {
+      align-self: flex-start;
+      color: var(--ocean);
+      font-weight: 700;
+      text-underline-offset: .25em;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: minmax(320px, .9fr) minmax(0, 1.1fr);
+      min-height: 88vh;
+      background: #e7f5f4;
+    }
+
+    .about-photo { min-height: 44rem; }
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .about-copy {
+      align-self: center;
+      padding: clamp(3rem, 7vw, 7rem);
+    }
+
+    .about-copy > p {
+      max-width: 43rem;
+      font-size: 1.08rem;
+      line-height: 1.78;
+    }
+
+    .about-facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 2.4rem;
+    }
+
+    .fact {
+      min-height: 8.8rem;
+      padding: 1.2rem;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .fact strong {
+      display: block;
+      margin-bottom: .45rem;
+      color: var(--coral);
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+
+    .fact span { font-size: .9rem; line-height: 1.45; }
+
+    .read-together {
+      padding: clamp(5rem, 9vw, 9rem) clamp(1.2rem, 5vw, 5rem);
+      color: white;
+      background: var(--deep);
+    }
+
+    .together-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .together-grid h2 {
+      margin: 0;
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(3rem, 5vw, 5.4rem);
+      font-weight: 500;
+      line-height: .95;
+    }
+
+    .reader-notes { display: grid; gap: 1rem; }
+    .reader-note {
+      padding: 1.5rem 1.6rem;
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 1.2rem;
+      background: rgba(255, 255, 255, .06);
+    }
+    .reader-note strong {
+      display: block;
+      margin-bottom: .35rem;
+      color: var(--sun);
+      font-size: 1.05rem;
+    }
+    .reader-note p { margin: 0; color: rgba(255, 255, 255, .76); line-height: 1.6; }
+
+    .sand-memory {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(5rem, 9vw, 9rem) 1.2rem;
+      background:
+        radial-gradient(circle at 12% 15%, rgba(239, 101, 79, .17), transparent 18rem),
+        var(--sand);
+      text-align: center;
+    }
+
+    .sand-memory > p {
+      max-width: 42rem;
+      margin: 1.25rem auto 2.4rem;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .sand-box {
+      position: relative;
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 1rem;
+      border: 1px solid rgba(112, 76, 41, .13);
+      border-radius: 1.6rem;
+      background: #efcf94;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 24px 60px rgba(83, 56, 30, .12);
+    }
+
+    #sand-canvas {
+      display: block;
+      width: 100%;
+      height: min(42vw, 330px);
+      min-height: 230px;
+      border-radius: 1rem;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.2) 0 2px, transparent 3px),
+        radial-gradient(circle at 80% 65%, rgba(119,78,36,.09) 0 1px, transparent 2px),
+        #e8c27f;
+      touch-action: none;
+      cursor: crosshair;
+    }
+
+    .sand-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .75rem;
+      margin-top: 1rem;
+    }
+
+    button, .visit-link {
+      min-height: 2.8rem;
+      padding: .7rem 1rem;
+      border: 0;
+      border-radius: 99px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button { color: var(--deep); background: rgba(255,255,255,.7); }
+    button.primary { color: white; background: #ac4335; }
+
+    .visit {
+      padding: clamp(4rem, 7vw, 7rem) 1.2rem;
+      background: var(--ocean);
+      color: white;
+      text-align: center;
+    }
+
+    .visit h2 {
+      margin: 0 auto 1rem;
+      max-width: 18ch;
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 500;
+      line-height: .98;
+    }
+
+    .visit p { max-width: 42rem; margin: 0 auto 1.8rem; line-height: 1.7; }
+    .visit-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--deep);
+      background: var(--sun);
+      text-decoration: none;
+    }
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 2rem clamp(1.2rem, 5vw, 5rem);
+      color: rgba(255,255,255,.74);
+      background: #092d3a;
+      font-size: .86rem;
+    }
+
+    footer .footer-motto {
+      color: white;
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 1.15rem;
+      font-style: italic;
+    }
+
+    .js [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .75s ease, transform .75s ease;
+    }
+    .js [data-reveal].visible { opacity: 1; transform: none; }
+
+    @media (max-width: 820px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-copy { padding: 4.5rem 1.4rem 2.2rem; }
+      h1 { max-width: 9ch; }
+      .hero-photo {
+        min-height: 54svh;
+        clip-path: ellipse(94% 80% at 62% 56%);
+      }
+      .sun { top: auto; bottom: 43%; right: 5%; }
+      .nav-links { display: none; }
+      .book-grid { grid-template-columns: 1fr; }
+      .book-card { grid-template-columns: minmax(130px, .65fr) minmax(0, 1fr); }
+      .about { grid-template-columns: 1fr; }
+      .about-photo { min-height: 62svh; }
+      .about-copy { padding: 4rem 1.4rem; }
+      .together-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .book-card { grid-template-columns: 1fr; }
+      .cover-wrap { padding: 1.4rem; }
+      .cover-wrap img { width: min(100%, 16rem); }
+      .about-facts { grid-template-columns: 1fr; }
+      .fact { min-height: 0; }
+      footer { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+      .js [data-reveal] { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <main id="main">
+    <section class="hero" aria-labelledby="page-title">
+      <nav class="mini-nav" aria-label="Page navigation">
+        <a class="wordmark" href="#main"><span class="book-mark" aria-hidden="true"></span> Hope Taylor Spencer</a>
+        <div class="nav-links">
+          <a href="#books">Books</a>
+          <a href="#about">Meet Hope</a>
+          <a href="#memory">Make a memory</a>
+        </div>
+      </nav>
+      <div class="hero-copy">
+        <div class="eyebrow">Coastal Children’s Author</div>
+        <h1 id="page-title">Hope Taylor Spencer</h1>
+        <p class="motto">“Making beach memories one story at a time.”</p>
+        <p class="intro">Rhyming picture books filled with beach days, curious creatures, family memories, and the small acts of kindness that make a place feel like home.</p>
+        <a class="cta" href="#stories">Meet her stories <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-photo">
+        <img src="assets/hope-reading.jpg" alt="Hope Taylor Spencer smiling as she reads a colorful children’s book aloud">
+      </div>
+      <div class="sun" aria-hidden="true"></div>
+      <div class="wave" aria-hidden="true"></div>
+    </section>
+
+    <section class="preview-story" id="stories" aria-labelledby="stories-title">
+      <div>
+        <span>Four stories, one beloved shoreline</span>
+        <h2 id="stories-title">Every tide brings something to notice.</h2>
+        <p>Rain becomes a reason to imagine. A painted bird carries kindness through town. Sea creatures turn counting into play. One little girl’s first wave becomes a memory she carries home.</p>
+      </div>
+    </section>
+
+    <section class="books" id="books" aria-labelledby="books-title">
+      <div class="section-heading" data-reveal>
+        <span class="section-kicker">Stories from the shore</span>
+        <h2 id="books-title">Books made to be read together.</h2>
+        <p>Hope’s rhyming picture books invite young readers to listen, join in, look closely, and carry a little bit of the coast home with them.</p>
+      </div>
+
+      <div class="book-grid">
+        <article class="book-card" data-reveal style="--card-bg:#d8eef0">
+          <div class="cover-wrap">
+            <img src="assets/rainy-days.jpg" alt="Cover of Rainy Days at the Beach" loading="lazy" width="900" height="900">
+          </div>
+          <div class="book-copy">
+            <span class="book-number">Story 01 · Weather &amp; imagination</span>
+            <h3>Rainy Days at the Beach</h3>
+            <p>Two children dream of sunny-day adventures while trying to recreate their favorite beach activities indoors. A lively repeating refrain makes this story easy to join and fun to read aloud.</p>
+            <a class="book-link" href="https://www.goodreads.com/book/show/210846792-rainy-days-at-the-beach" target="_blank" rel="noopener">Explore the book <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+
+        <article class="book-card" data-reveal style="--card-bg:#f8e6b6">
+          <div class="cover-wrap">
+            <img src="assets/gooney-birds.jpg" alt="Cover of The Gooney Birds of Southport" loading="lazy" width="900" height="900">
+          </div>
+          <div class="book-copy">
+            <span class="book-number">Story 02 · Creativity &amp; kindness</span>
+            <h3>The Gooney Birds of Southport</h3>
+            <p>A mysterious artist leaves bright, one-of-a-kind birds around Southport, Oak Island, and beyond. Their cheerful message encourages every reader to spread kindness where they live.</p>
+            <a class="book-link" href="https://www.target.com/p/-/A-94349284" target="_blank" rel="noopener">Find the book <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+
+        <article class="book-card" data-reveal style="--card-bg:#d9f1f7">
+          <div class="cover-wrap">
+            <img src="assets/beachy-countdown.jpg" alt="Cover of Beachy Countdown" loading="lazy" width="900" height="900">
+          </div>
+          <div class="book-copy">
+            <span class="book-number">Story 03 · Counting &amp; discovery</span>
+            <h3>Beachy Countdown</h3>
+            <p>Pelicans, dolphins, sharks, sea stars, turtles, and laughing children turn numbers into a day of discovery, from the first cheerful sun to the final winking moon.</p>
+            <a class="book-link" href="https://www.target.com/p/-/A-1004993103" target="_blank" rel="noopener">Find the book <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+
+        <article class="book-card" data-reveal style="--card-bg:#f6ddcf">
+          <div class="cover-wrap">
+            <img src="assets/rubys-beach.jpg" alt="Cover of Ruby’s Beach" loading="lazy" width="900" height="900">
+          </div>
+          <div class="book-copy">
+            <span class="book-number">Story 04 · Family &amp; belonging</span>
+            <h3>Ruby’s Beach</h3>
+            <p>Ruby’s first wave, first sandcastle, and first treasures become a lifelong memory. Years later, she returns to the coast and shares her own stories of the ocean’s glories.</p>
+            <a class="book-link" href="https://www.target.com/p/-/A-1010771635" target="_blank" rel="noopener">Find the book <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div class="about-photo">
+        <img src="assets/hope-signing.jpg" alt="Hope Taylor Spencer smiling at a table during a book event" loading="lazy" width="1016" height="800">
+      </div>
+      <div class="about-copy" data-reveal>
+        <span class="section-kicker">Meet Hope</span>
+        <h2 id="about-title">A reader, teacher, and lifelong beach dreamer.</h2>
+        <p>Hope grew up in a military family and lived in eleven states and Puerto Rico. Wherever her family moved, books were steady companions and windows into the world.</p>
+        <p>As an elementary teacher, her happiest classroom moments came from reading aloud and watching children return to a favorite book again and again. Summers on the North Carolina coast with her grandparents inspired a dream of writing beach stories of her own. Today, she lives near that same coast.</p>
+        <div class="about-facts" aria-label="About Hope">
+          <div class="fact"><strong>Educator</strong><span>Stories shaped by years of reading with young learners.</span></div>
+          <div class="fact"><strong>Coastal</strong><span>North Carolina beaches are part of her family history and home.</span></div>
+          <div class="fact"><strong>Read aloud</strong><span>Rhythm, rhyme, and repetition invite children into the telling.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="read-together" aria-labelledby="together-title">
+      <div class="together-grid">
+        <div data-reveal>
+          <span class="section-kicker" style="color:var(--sun)">For families &amp; educators</span>
+          <h2 id="together-title">The story begins when children join in.</h2>
+        </div>
+        <div class="reader-notes">
+          <div class="reader-note" data-reveal>
+            <strong>Read it aloud</strong>
+            <p>Rhymes and repeating language help children anticipate what comes next and become part of the performance.</p>
+          </div>
+          <div class="reader-note" data-reveal>
+            <strong>Look closely</strong>
+            <p>Beach animals, handmade birds, shells, waves, and small visual details reward another look.</p>
+          </div>
+          <div class="reader-note" data-reveal>
+            <strong>Carry it home</strong>
+            <p>Each story leaves a simple invitation: imagine, count, create, remember, or brighten someone’s day.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sand-memory" id="memory" aria-labelledby="memory-title">
+      <span class="section-kicker">A little moment from Ruby’s Beach</span>
+      <h2 id="memory-title">Leave a heart in the sand.</h2>
+      <p>Draw with a mouse or fingertip. Like a real mark at the water’s edge, this one stays only for the moment and is never saved.</p>
+      <div class="sand-box" data-reveal>
+        <canvas id="sand-canvas" role="img" aria-label="An interactive patch of digital sand where visitors can draw with a pointer"></canvas>
+        <div class="sand-controls">
+          <button class="primary" id="heart-button" type="button">Draw a heart</button>
+          <button id="clear-button" type="button">Smooth the sand</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="visit" aria-labelledby="visit-title">
+      <span class="section-kicker" style="color:var(--sand)">Bring the stories together</span>
+      <h2 id="visit-title">A good book becomes a shared memory.</h2>
+      <p>For author events, classroom visits, library programs, and questions about Hope’s books, contact her publisher.</p>
+      <a class="visit-link" href="mailto:info@pawsandclawspublishing.com?subject=Hope%20Taylor%20Spencer%20Inquiry">Ask about Hope’s books</a>
+    </section>
+  </main>
+
+  <footer>
+    <span>Hope Taylor Spencer · Coastal Children’s Author</span>
+    <span class="footer-motto">“Making beach memories one story at a time.”</span>
+  </footer>
+
+  <script>
+    (function () {
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var revealItems = document.querySelectorAll('[data-reveal]');
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        revealItems.forEach(function (item) { item.classList.add('visible'); });
+      } else {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        revealItems.forEach(function (item) { observer.observe(item); });
+      }
+
+      var canvas = document.getElementById('sand-canvas');
+      var context = canvas.getContext('2d');
+      var drawing = false;
+      var ratio = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+
+      function prepareSand() {
+        var box = canvas.getBoundingClientRect();
+        canvas.width = Math.round(box.width * ratio);
+        canvas.height = Math.round(box.height * ratio);
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+        context.lineCap = 'round';
+        context.lineJoin = 'round';
+        context.strokeStyle = 'rgba(113, 70, 33, .72)';
+        context.lineWidth = 4;
+      }
+
+      function point(event) {
+        var box = canvas.getBoundingClientRect();
+        return { x: event.clientX - box.left, y: event.clientY - box.top };
+      }
+
+      canvas.addEventListener('pointerdown', function (event) {
+        drawing = true;
+        canvas.setPointerCapture(event.pointerId);
+        var start = point(event);
+        context.beginPath();
+        context.moveTo(start.x, start.y);
+      });
+
+      canvas.addEventListener('pointermove', function (event) {
+        if (!drawing) return;
+        var next = point(event);
+        context.lineTo(next.x, next.y);
+        context.stroke();
+      });
+
+      function stopDrawing() { drawing = false; }
+      canvas.addEventListener('pointerup', stopDrawing);
+      canvas.addEventListener('pointercancel', stopDrawing);
+
+      document.getElementById('clear-button').addEventListener('click', prepareSand);
+      document.getElementById('heart-button').addEventListener('click', function () {
+        prepareSand();
+        var width = canvas.clientWidth;
+        var height = canvas.clientHeight;
+        var size = Math.min(width, height) * .25;
+        var x = width / 2;
+        var y = height / 2 - size * .12;
+        context.beginPath();
+        context.moveTo(x, y + size * .8);
+        context.bezierCurveTo(x - size * 1.45, y, x - size * .65, y - size, x, y - size * .25);
+        context.bezierCurveTo(x + size * .65, y - size, x + size * 1.45, y, x, y + size * .8);
+        context.stroke();
+      });
+
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(prepareSand, 150);
+      });
+      prepareSand();
+    }());
+  </script>
+</body>
+</html>

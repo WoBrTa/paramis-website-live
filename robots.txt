@@ -6,6 +6,7 @@
 User-agent: *
 Allow: /
 Disallow: /portal.html
+Disallow: /hope/
 Disallow: /_backups/
 Disallow: /mockup-
 Disallow: /scripts/
